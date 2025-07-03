@@ -63,8 +63,11 @@
             transform: translateX(-50%);
             width: 100%;
             max-width: 800px;
-            z-index: 999;
+            z-index: 1000;
+            /* Aumentato da 999 a 1000 */
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            /* Aggiunta transizione */
         }
 
         @media (max-width: 800px) {
@@ -352,10 +355,17 @@
             height: 100%;
             background: white;
             box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 999;
+            z-index: 1001;
+            /* Aumentato da 999 a 1001 */
             transition: right 0.3s ease;
             padding: 20px;
             overflow-y: auto;
+        }
+
+        /* Aggiungi questo nuovo stile */
+        .cart-panel.open~.container .nav {
+            transform: translateX(-50%) translateY(100%);
+            /* Sposta la barra fuori dallo schermo */
         }
 
         @media (max-width: 500px) {
@@ -515,13 +525,23 @@
             left: 50%;
             transform: translateX(-50%);
             background: #27ae60;
+            /* Verde di default */
             color: white;
-            padding: 10px 20px;
+            padding: 15px 25px;
             border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            z-index: 1001;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 2000;
+            /* Aumentato per essere sopra il modal */
             opacity: 0;
             transition: opacity 0.3s ease;
+            font-weight: bold;
+            text-align: center;
+            max-width: 90%;
+        }
+
+        .notification.error {
+            background: #e74c3c;
+            /* Rosso per gli errori */
         }
 
         .notification.show {
@@ -685,8 +705,8 @@
     <!-- Pannello carrello -->
     <div class="overlay" onclick="toggleCart()"></div>
     <div class="cart-panel">
-        <br><br><br><br>
-        <div class="rem-note">* Per modifiche agli ingredienti, specificare nella chat WhatsApp al momento dell'ordine.</div>
+        <div class="rem-note">* Per modifiche agli ingredienti, specificare nella chat WhatsApp al momento dell'ordine.
+        </div>
         <br>
         <div class="cart-header">
             <h2 class="cart-title">Il tuo ordine</h2>
@@ -1302,14 +1322,30 @@
         }
 
         // Show notification
-        function showNotification(message) {
+        function showNotification(message, isError = false) {
             const notification = document.getElementById('notification');
             notification.textContent = message;
+
+            // Imposta il colore in base al parametro isError
+            if (isError) {
+                notification.classList.add('error');
+            } else {
+                notification.classList.remove('error');
+            }
+
             notification.classList.add('show');
+
+            // Se c'è il modal aperto, posiziona la notifica più in basso
+            const modal = document.getElementById('customerInfoModal');
+            if (modal.classList.contains('open')) {
+                notification.style.top = '80px';
+            } else {
+                notification.style.top = '20px';
+            }
 
             setTimeout(() => {
                 notification.classList.remove('show');
-            }, 2000);
+            }, 3000);
         }
 
         // Cart functions
@@ -1409,17 +1445,24 @@
         function toggleCart() {
             const cartPanel = document.querySelector('.cart-panel');
             const overlay = document.querySelector('.overlay');
+            const nav = document.querySelector('.nav');
 
             cartPanel.classList.toggle('open');
             overlay.classList.toggle('active');
+
+            // Aggiungi/rimuovi classe alla nav quando il carrello è aperto/chiuso
+            if (cartPanel.classList.contains('open')) {
+                nav.style.transform = 'translateX(-50%) translateY(100%)';
+            } else {
+                nav.style.transform = 'translateX(-50%) translateY(0)';
+            }
         }
 
         function showCustomerInfoModal() {
             if (cart.length === 0) {
-                showNotification('Il carrello è vuoto!');
+                showNotification('Il carrello è vuoto!', true); // true per il rosso
                 return;
             }
-
             document.getElementById('customerInfoModal').classList.add('open');
         }
 
@@ -1433,11 +1476,11 @@
             const number = document.getElementById('customerNumber').value;
 
             if (!name || !address || !number) {
-                showNotification('Compila tutti i campi obbligatori');
+                showNotification('Compila tutti i campi obbligatori', true); // Aggiunto true per il rosso
                 return;
             }
 
-            const phoneNumber = "3342900638"; // Numero WhatsApp del ristorante
+            const phoneNumber = "3342900638";
             const orderText = generateOrderText(name, address, number);
             const encodedText = encodeURIComponent(orderText);
 
