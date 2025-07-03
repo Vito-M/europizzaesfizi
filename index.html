@@ -25,6 +25,7 @@
             background: white;
             min-height: 100vh;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
         @media (max-width: 768px) {
@@ -144,6 +145,7 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             border-left: 4px solid #e74c3c;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
         }
 
         @media (max-width: 768px) {
@@ -305,6 +307,337 @@
             font-weight: bold;
             font-size: 1.2em;
         }
+
+        /* Stili per il carrello */
+        .cart-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            color: black;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #f1c40f;
+            color: #2c3e50;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .cart-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            transition: right 0.3s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 500px) {
+            .cart-panel {
+                width: 100%;
+                right: -100%;
+            }
+        }
+
+        .cart-panel.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #7f8c8d;
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-name {
+            flex: 1;
+        }
+
+        .cart-item-price {
+            margin: 0 10px;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-btn {
+            background: #f1f1f1;
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-value {
+            margin: 0 10px;
+        }
+
+        .remove-item {
+            margin-left: 10px;
+            color: #e74c3c;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .cart-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .checkout-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .clear-cart-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .add-to-cart-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart-btn:hover {
+            background: #2ecc71;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Stili per il feedback */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .notification.show {
+            opacity: 1;
+        }
+
+        .cart-btn.pulse {
+            animation: pulse 0.5s ease;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Stili per il modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1002;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .modal-btn.cancel {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .modal-btn.confirm {
+            background: #27ae60;
+            color: white;
+        }
+
+        .total-note {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .rem-note {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+            font-style: italic;
+        }
     </style>
 </head>
 
@@ -313,785 +646,16 @@
         <div class="header">
             <div class="logo">
                 <img src="img/logo.png" alt="Logo Euro Pizza & Sfizi"
-                    style="height: 250px; margin-bottom: 1rem; border-radius: 8px;" 
-                    onerror="this.style.display='none'">
+                    style="height: 250px; margin-bottom: 1rem; border-radius: 8px;" onerror="this.style.display='none'">
             </div>
             <h1>🍕 Euro Pizza & Sfizi</h1>
             <p>Menu Digitale</p>
         </div>
 
-        <div id="pizze" class="section active">
-            <div class="item-description">
-                <strong>Le nostre buonissime pizze sono preparate con cura e lievitate per ben 48 ore</strong>, per regalarti un gusto autentico e una consistenza unica.  
-                <br><br>
-                <strong>Alcune richieste comportano un supplemento:</strong>
-                <ul class="special-addons">
-                    <li>Mozzarella di Bufala DOP: <strong>+ €1,50</strong></li>
-                    <li>Mozzarella senza lattosio: <strong>+ €1,50</strong></li>
-                    <li>Impasto con bordo alto (stile napoletano): <strong>+ €1,50</strong></li>
-                    <li>Impasto ai cereali: <strong>+ €1,50</strong></li>
-                    <li>Impasto senza glutine: <strong>+ €2,50</strong></li>
-                </ul>
-            </div>
-            <br>
-
-            <div class="category">
-                <h2 class="category-title pizza-icon">Pizze Base</h2>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Ciccio</div>
-                        <div class="item-price">€4.00</div>
-                    </div>
-                    <div class="item-description">Pizza bianca semplice e fragrante, perfetta per chi ama i sapori
-                        essenziali</div>
-                    <div class="item-ingredients">Impasto pizza, olio EVO, sale, origano</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Ciccio Rosso</div>
-                        <div class="item-price">€4.50</div>
-                    </div>
-                    <div class="item-description">Pizza rossa tradizionale con il sapore autentico del pomodoro</div>
-                    <div class="item-ingredients">Pomodoro, olio EVO, origano</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Marinara</div>
-                        <div class="item-price">€4.50</div>
-                    </div>
-                    <div class="item-description">Pizza classica napoletana con pomodoro fresco, aglio profumato e
-                        origano</div>
-                    <div class="item-ingredients">Pomodoro, aglio, origano, olio EVO</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Margherita</div>
-                        <div class="item-price">€5.00</div>
-                    </div>
-                    <div class="item-description">La regina delle pizze con pomodoro, mozzarella filante e basilico
-                        fresco</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, olio EVO</div>
-                </div>
-            </div>
-
-            <div class="category">
-                <h2 class="category-title pizza-icon">Pizze Classiche</h2>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Wurstel</div>
-                        <div class="item-price">€6.00</div>
-                    </div>
-                    <div class="item-description">Pizza amata da grandi e piccoli con gustosi wurstel di alta qualità</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, wurstel</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Diavola</div>
-                        <div class="item-price">€6.00</div>
-                    </div>
-                    <div class="item-description">Pizza piccante per i palati coraggiosi con salame piccante di qualità
-                    </div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, salame piccante</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Champignon</div>
-                        <div class="item-price">€6.00</div>
-                    </div>
-                    <div class="item-description">Pizza semplice e delicata con funghi champignon freschi</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, funghi champignon</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Nduja</div>
-                        <div class="item-price">€6.00</div>
-                    </div>
-                    <div class="item-description">Pizza dal sapore intenso con l'autentica nduja calabrese piccante
-                    </div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, nduja calabrese</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Carciofina</div>
-                        <div class="item-price">€6.00</div>
-                    </div>
-                    <div class="item-description">Pizza mediterranea con teneri carciofi che donano freschezza</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, carciofi</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Cotto</div>
-                        <div class="item-price">€6.00</div>
-                    </div>
-                    <div class="item-description">Pizza tradizionale con prosciutto cotto di alta qualità</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, prosciutto cotto</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Francese</div>
-                        <div class="item-price">€6.00</div>
-                    </div>
-                    <div class="item-description">Pizza raffinata con cremoso formaggio alle erbe aromatiche</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, formaggio alle erbe</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Romana</div>
-                        <div class="item-price">€6.00</div>
-                    </div>
-                    <div class="item-description">Pizza dal gusto mediterraneo con acciughe salate e capperi profumati
-                    </div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, acciughe, capperi</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Gorgonzola</div>
-                        <div class="item-price">€6.00</div>
-                    </div>
-                    <div class="item-description">Pizza dal sapore intenso con cremoso gorgonzola DOP</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, gorgonzola</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Patatina</div>
-                        <div class="item-price">€6.00</div>
-                    </div>
-                    <div class="item-description">Pizza originale e croccante con patate fritte dorate</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, patate fritte</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Olive Nere</div>
-                        <div class="item-price">€6.00</div>
-                    </div>
-                    <div class="item-description">Pizza mediterranea con olive nere denocciolate dal sapore intenso</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, olive nere (denocciolate)</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Zucchinella</div>
-                        <div class="item-price">€6.00</div>
-                    </div>
-                    <div class="item-description">Pizza leggera con zucchine fresche e croccante pangrattato tarallo
-                    </div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, zucchine, pangrattato tarallo</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Peperoni</div>
-                        <div class="item-price">€6.00</div>
-                    </div>
-                    <div class="item-description">Pizza colorata con peperoni dolci e pangrattato tarallo croccante
-                    </div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, peperoni, pangrattato tarallo</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Melanzane</div>
-                        <div class="item-price">€6.00</div>
-                    </div>
-                    <div class="item-description">Pizza mediterranea con melanzane saporite e pangrattato tarallo</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, melanzane, pangrattato tarallo</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Friarielli</div>
-                        <div class="item-price">€6.00</div>
-                    </div>
-                    <div class="item-description">Pizza con friarielli saltati e tarallo sbriciolato</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, friarielli, tarallo</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Ciliegina (PICCANTE)</div>
-                        <div class="item-price">€6.00</div>
-                    </div>
-                    <div class="item-description">Pizza piccante con pomodorini ciliegino dal sapore vivace e speziato
-                    </div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, pomodorini ciliegino piccanti</div>
-                </div>
-            </div>
-
-            <div class="category">
-                <h2 class="category-title pizza-icon">Pizze Speciali</h2>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Crudaiola</div>
-                        <div class="item-price">€6.50</div>
-                    </div>
-                    <div class="item-description">Pizza fresca con pomodorini, rucola e scaglie di ricotta marzotica
-                    </div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, pomodorini, rucola, scaglie di ricotta marzotica
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Quattro Stagioni</div>
-                        <div class="item-price">€6.50</div>
-                    </div>
-                    <div class="item-description">Pizza tradizionale divisa in quattro con prosciutto, funghi, carciofi
-                        e olive</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, prosciutto cotto, funghi, carciofi, olive</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Capricciosa</div>
-                        <div class="item-price">€6.50</div>
-                    </div>
-                    <div class="item-description">Pizza ricca e completa con tutti gli ingredienti della tradizione
-                    </div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, prosciutto cotto, funghi, carciofi, olive</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Americana</div>
-                        <div class="item-price">€6.50</div>
-                    </div>
-                    <div class="item-description">Pizza dal gusto deciso con wurstel e patatine fritte croccanti</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, wurstel, patatine fritte</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Norcina</div>
-                        <div class="item-price">€6.50</div>
-                    </div>
-                    <div class="item-description">Pizza con salsiccia di Norcia. Gusto autentico e irresistibile!</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, salsiccia di Norcia</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Tonno e Cipolla</div>
-                        <div class="item-price">€6.50</div>
-                    </div>
-                    <div class="item-description">Pizza marina con tonno di qualità e cipolla fresca</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, tonno, cipolla</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Ortolana</div>
-                        <div class="item-price">€6.50</div>
-                    </div>
-                    <div class="item-description">Pizza vegetariana con un mix di verdure fresche di stagione</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, zucchine, melanzane, peperoni e pangrattato
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Norcia e Rape</div>
-                        <div class="item-price">€6.50</div>
-                    </div>
-                    <div class="item-description">Pizza rustica con salsiccia di Norcia e cime di rapa barese saporita
-                    </div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, salsiccia di Norcia, cime di rapa</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Sannicandrese</div>
-                        <div class="item-price">€7.00</div>
-                    </div>
-                    <div class="item-description">Pizza tipica con rape, olive nere denocciolate e ciliegino piccante</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, rape, olive nere (denocciolate), ciliegino piccante</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Crudo e Bufala</div>
-                        <div class="item-price">€8.00</div>
-                    </div>
-                    <div class="item-description">Pizza gourmet con mozzarella di bufala e prosciutto crudo aggiunto
-                        dopo cottura</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella di bufala, prosciutto crudo (aggiunto dopo
-                        cottura), basilico</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Saporita</div>
-                        <div class="item-price">€7.00</div>
-                    </div>
-                    <div class="item-description">Pizza dal sapore intenso con mix di ingredienti mediterranei</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, cipolla, peperoni, tonno, acciughe</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Bresaola Completa</div>
-                        <div class="item-price">€7.00</div>
-                    </div>
-                    <div class="item-description">Pizza raffinata con bresaola, grana, rucola fresca e una spruzzata di limone</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, bresaola (aggiunta dopo cottura), grana, rucola, limone</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Euro Ciccio</div>
-                        <div class="item-price">€7.00</div>
-                    </div>
-                    <div class="item-description">Pizza speciale simbolo di Euro Pizza, con bordo alto e ingredienti di qualità</div>
-                    <div class="item-ingredients">BORDO ALTO, mozzarella di bufala, pomodorini ciliegino, basilico</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Carbonara</div>
-                        <div class="item-price">€7.00</div>
-                    </div>
-                    <div class="item-description">Ispirata al celebre piatto romano, regina della tradizione, la Carbonara</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, pancetta, uovo, pepe, scamorza affumicata</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Bolognese</div>
-                        <div class="item-price">€7.00</div>
-                    </div>
-                    <div class="item-description">Pizza gourmet con mortadella, stracciatella e una spolverata di pistacchio</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, mortadella, stracciatella, pistacchio</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Norvegese</div>
-                        <div class="item-price">€7.00</div>
-                    </div>
-                    <div class="item-description">Pizza bianca con salmone e ingredienti freschi</div>
-                    <div class="item-ingredients">Mozzarella, philadelphia, salmone, zucchine, tarallo</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Frutti di Mare</div>
-                        <div class="item-price">€7.00</div>
-                    </div>
-                    <div class="item-description">Pizza marina con frutti di mare</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, frutti di mare, ciliegino, tarallo</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Alto Adige</div>
-                        <div class="item-price">€7.00</div>
-                    </div>
-                    <div class="item-description">Pizza con speck e formaggio alle erbe</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, speck (aggiunto dopo cottura), formaggio alle
-                        erbe, rucola</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Principessa</div>
-                        <div class="item-price">€8.00</div>
-                    </div>
-                    <div class="item-description">Pizza regale con prosciutto crudo e stracciatella</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella, prosciutto crudo (aggiunto dopo cottura), panna,
-                        stracciatella</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Gamberina</div>
-                        <div class="item-price">€8.00</div>
-                    </div>
-                    <div class="item-description">Pizza gourmet con gamberi</div>
-                    <div class="item-ingredients">Bianca, mozzarella, gamberi sgusciati, tarallo</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Murgiana</div>
-                        <div class="item-price">€8.00</div>
-                    </div>
-                    <div class="item-description">Pizza primaverile dal gusto intenso con base alla crema di zucca</div>
-                    <div class="item-ingredients">Bianca, mozzarella, crema di zucca, bacon, funghi cardoncelli, olive nere (denocciolate)</div>
-                </div>
-            </div>
-
-            <div class="category">
-                <h2 class="category-title pizza-icon">Pizze Giganti</h2>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Gigante Margherita</div>
-                        <div class="item-price">€10.00</div>
-                    </div>
-                    <div class="item-description">La classica Margherita in formato gigante</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella</div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Gigante Farcita</div>
-                        <div class="item-price">€13.00</div>
-                    </div>
-                    <div class="item-description">Pizza gigante con ingredienti a tua scelta</div>
-                    <div class="item-ingredients">Ingredienti personalizzabili con supplemento</div>
-                </div>
-            </div>
-        </div>
-
-        <div id="sfizi" class="section">
-            <div class="category">
-                <h2 class="category-title fried-icon">Arancini</h2>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Arancino al Ragù</div>
-                        <div class="item-price">€2.50</div>
-                    </div>
-                    <div class="item-description">Croccante fuori e morbido dentro, il nostro arancino siciliano con
-                        ragù di carne succulenta e filante mozzarella</div>
-                    <div class="item-ingredients">Riso, ragù di carne, mozzarella, pangrattato</div>
-                    <div class="size-options">
-                        <span class="size-option">1 pezzo</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Arancino Bianco</div>
-                        <div class="item-price">€2.50</div>
-                    </div>
-                    <div class="item-description">Una delizia cremosa con prosciutto cotto, mozzarella filante e
-                        besciamella, dorato alla perfezione</div>
-                    <div class="item-ingredients">Riso, prosciutto cotto, mozzarella, besciamella, pangrattato</div>
-                    <div class="size-options">
-                        <span class="size-option">1 pezzo</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="category">
-                <h2 class="category-title fried-icon">Fritti</h2>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Panzerotto</div>
-                        <div class="item-price">€1.50</div>
-                    </div>
-                    <div class="item-description">Il classico panzerotto barese, croccante fuori e morbido dentro, con
-                        pomodoro fresco e mozzarella filante</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella</div>
-                    <div class="size-options">
-                        <span class="size-option">1 pezzo</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Panzerottini</div>
-                        <div class="item-price">€3.00</div>
-                    </div>
-                    <div class="item-description">Piccole bontà fritte, perfette per stuzzicare l'appetito. Croccanti
-                        fuori e morbidissimi dentro</div>
-                    <div class="item-ingredients">Pomodoro, mozzarella</div>
-                    <div class="size-options">
-                        <span class="size-option">5 pezzi</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Scagliozze</div>
-                        <div class="item-price">€3.00</div>
-                    </div>
-                    <div class="item-description">Le tipiche fette di polenta fritta, croccanti fuori e morbide dentro,
-                        un must della tradizione pugliese</div>
-                    <div class="item-ingredients">Polenta, olio per friggere, sale</div>
-                    <div class="size-options">
-                        <span class="size-option">5 pezzi</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Anelli di Cipolla</div>
-                        <div class="item-price">€3.00</div>
-                    </div>
-                    <div class="item-description">Cipolle dolci tagliate ad anelli e impanate con una croccante panatura
-                        dorata</div>
-                    <div class="item-ingredients">Cipolle, farina, uova, pangrattato</div>
-                    <div class="size-options">
-                        <span class="size-option">5 pezzi</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Crocchè di Patate</div>
-                        <div class="item-price">€3.00</div>
-                    </div>
-                    <div class="item-description">Soffici all'interno e croccanti fuori, i nostri crocchè sono preparati con
-                        patate fresche</div>
-                    <div class="item-ingredients">Patate, uova, pangrattato, spezie</div>
-                    <div class="size-options">
-                        <span class="size-option">5 pezzi</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Birbe di Pollo</div>
-                        <div class="item-price">€3.00</div>
-                    </div>
-                    <div class="item-description">Bocconcini di pollo tenerissimo con doppia panatura croccante,
-                        irresistibili con il loro cuore succoso</div>
-                    <div class="item-ingredients">Pollo, farina, uova, pangrattato, spezie</div>
-                    <div class="size-options">
-                        <span class="size-option">5 pezzi</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Chele di Granchio</div>
-                        <div class="item-price">€3.00</div>
-                    </div>
-                    <div class="item-description">Crocchette dal sapore di mare, con un delicato gusto di granchio e una
-                        panatura dorata e fragrante</div>
-                    <div class="item-ingredients">Surimi, pangrattato, spezie</div>
-                    <div class="size-options">
-                        <span class="size-option">5 pezzi</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Patatine Fritte</div>
-                        <div class="item-price">€3.50</div>
-                    </div>
-                    <div class="item-description">Patate fritte al momento, croccanti fuori e morbide
-                        dentro, leggermente salate</div>
-                    <div class="item-ingredients">Patate, sale, olio per friggere</div>
-                    <div class="size-options">
-                        <span class="size-option">Porzione media</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Patatine Spirali</div>
-                        <div class="item-price">€4.00</div>
-                    </div>
-                    <div class="item-description">Patate tagliate a spirale, croccanti e saporite,
-                        con una spolverata di paprica dolce</div>
-                    <div class="item-ingredients">Patate, paprica, sale, olio per friggere</div>
-                    <div class="size-options">
-                        <span class="size-option">Porzione media</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="dolci" class="section">
-            <div class="category">
-                <h2 class="category-title dessert-icon">Dolci</h2>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Pizza alla Nutella</div>
-                        <div class="item-price">€6.50</div>
-                    </div>
-                    <div class="item-description">Pizza dolce con impasto fragrante ricoperta di crema alla nocciola
-                        Nutella e una spolverata di zucchero a velo</div>
-                    <div class="item-ingredients">Impasto pizza dolce, Nutella, zucchero a velo</div>
-                </div>
-            </div>
-        </div>
-
-        <div id="bevande" class="section">
-            <div class="category">
-                <h2 class="category-title drink-icon">Bibite</h2>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Coca Cola</div>
-                        <div class="item-price">€1.50</div>
-                    </div>
-                    <div class="item-description">La classica bevanda gassata dal gusto inconfondibile, perfetta per
-                        accompagnare pizza e fritti</div>
-                    <div class="size-options">
-                        <span class="size-option">Lattina 33cl</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Coca Cola Zero</div>
-                        <div class="item-price">€1.50</div>
-                    </div>
-                    <div class="item-description">Tutto il gusto della Coca Cola originale senza zuccheri, per chi
-                        preferisce una versione leggera</div>
-                    <div class="size-options">
-                        <span class="size-option">Lattina 33cl</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Fanta</div>
-                        <div class="item-price">€1.50</div>
-                    </div>
-                    <div class="item-description">Bevanda gassata all'arancia, fresca e dissetante, dal sapore fruttato
-                        e vivace</div>
-                    <div class="size-options">
-                        <span class="size-option">Lattina 33cl</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Chinotto</div>
-                        <div class="item-price">€1.50</div>
-                    </div>
-                    <div class="item-description">Bevanda italiana dal gusto amarognolo e aromatico, perfetta per chi
-                        ama i sapori intensi</div>
-                    <div class="size-options">
-                        <span class="size-option">Lattina 33cl</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Acqua Naturale</div>
-                        <div class="item-price">€1.00</div>
-                    </div>
-                    <div class="item-description">Acqua minerale fresca, leggera e purificante, ideale per dissetarsi
-                    </div>
-                    <div class="size-options">
-                        <span class="size-option">Bottiglia 50cl</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Acqua Frizzante</div>
-                        <div class="item-price">€1.00</div>
-                    </div>
-                    <div class="item-description">Acqua minerale con bollicine fresche e leggere, ottima per digerire
-                    </div>
-                    <div class="size-options">
-                        <span class="size-option">Bottiglia 50cl</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="category">
-                <h2 class="category-title beer-icon">Birre</h2>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Nastro Azzurro</div>
-                        <div class="item-price">€1.50</div>
-                    </div>
-                    <div class="item-description">Birra premium italiana dal gusto equilibrato e leggero, con un
-                        retrogusto leggermente amarognolo</div>
-                    <div class="size-options">
-                        <span class="size-option">Bottiglia 33cl</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Ichnusa</div>
-                        <div class="item-price">€1.50</div>
-                    </div>
-                    <div class="item-description">Birra lager sarda, fresca e dissetante, con un gusto pulito e una
-                        lieve nota di malto</div>
-                    <div class="size-options">
-                        <span class="size-option">Bottiglia 33cl</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Birra al Limone</div>
-                        <div class="item-price">€1.50</div>
-                    </div>
-                    <div class="item-description">Birra rinfrescante con una delicata nota di limone, perfetta per
-                        l'estate</div>
-                    <div class="size-options">
-                        <span class="size-option">Bottiglia 33cl</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Peroni Grande</div>
-                        <div class="item-price">€3.00</div>
-                    </div>
-                    <div class="item-description">La classica Peroni in formato grande, dal gusto pieno e maltato, con
-                        un finale leggermente amarognolo</div>
-                    <div class="size-options">
-                        <span class="size-option">Bottiglia 66cl</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Corona</div>
-                        <div class="item-price">€3.00</div>
-                    </div>
-                    <div class="item-description">Birra messicana leggera e rinfrescante, da gustare con una spruzzata
-                        di lime per un'esperienza autentica</div>
-                    <div class="size-options">
-                        <span class="size-option">Bottiglia 33cl</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Tennent's</div>
-                        <div class="item-price">€3.00</div>
-                    </div>
-                    <div class="item-description">Birra scozzese dal gusto pulito e fresco, prodotta con orzo locale e
-                        acqua purissima</div>
-                    <div class="size-options">
-                        <span class="size-option">Bottiglia 33cl</span>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <div class="item-header">
-                        <div class="item-name">Messina</div>
-                        <div class="item-price">€3.00</div>
-                    </div>
-                    <div class="item-description">Birra siciliana dorata e corposa, con una delicata nota salina che la
-                        rende unica</div>
-                    <div class="size-options">
-                        <span class="size-option">Bottiglia 50cl</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div id="pizze" class="section active"></div>
+        <div id="sfizi" class="section"></div>
+        <div id="dolci" class="section"></div>
+        <div id="bevande" class="section"></div>
     </div>
 
     <div class="footer">
@@ -1108,6 +672,61 @@
     </div>
 
     <div class="bottom-spacer"></div>
+
+    <!-- Notifica -->
+    <div class="notification" id="notification"></div>
+
+    <!-- Bottone carrello -->
+    <button class="cart-btn" onclick="toggleCart()">
+        🛒
+        <span class="cart-count">0</span>
+    </button>
+
+    <!-- Pannello carrello -->
+    <div class="overlay" onclick="toggleCart()"></div>
+    <div class="cart-panel">
+        <br><br><br><br>
+        <div class="rem-note">* Per modifiche agli ingredienti, specificare nella chat WhatsApp al momento dell'ordine.</div>
+        <br>
+        <div class="cart-header">
+            <h2 class="cart-title">Il tuo ordine</h2>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items">
+            <!-- Gli elementi del carrello verranno aggiunti qui dinamicamente -->
+        </div>
+        <div class="cart-total">
+            Totale: €<span class="total-amount">0.00</span>
+            <div class="total-note">* Il totale è indicativo e potrebbe variare in base alla consegna e modifiche
+                aggiuntive</div>
+        </div>
+        <div class="cart-actions">
+            <button class="checkout-btn" onclick="showCustomerInfoModal()">Invia ordine via WhatsApp</button>
+            <button class="clear-cart-btn" onclick="clearCart()">Svuota carrello</button>
+        </div>
+    </div>
+
+    <!-- Modal per informazioni cliente -->
+    <div class="modal" id="customerInfoModal">
+        <div class="modal-content">
+            <h3 class="modal-title">Informazioni per la consegna</h3>
+            <div class="form-group">
+                <label for="customerName">Nome e Cognome*</label>
+                <input type="text" id="customerName" required>
+            </div>
+            <div class="form-group">
+                <label for="customerAddress">Indirizzo*</label>
+                <input type="text" id="customerAddress" placeholder="Via/Piazza" required>
+            </div>
+            <div class="form-group">
+                <label for="customerNumber">Numero civico*</label>
+                <input type="text" id="customerNumber" required>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn cancel" onclick="closeCustomerInfoModal()">Annulla</button>
+                <button class="modal-btn confirm" onclick="sendOrder()">Conferma e invia</button>
+            </div>
+        </div>
     </div>
 
     <div class="nav">
@@ -1118,27 +737,751 @@
     </div>
 
     <script>
+        // Data structure for the menu
+        const menuData = {
+            pizze: {
+                intro: `
+                    <div class="item-description">
+                        <strong>Le nostre buonissime pizze sono preparate con cura e lievitate per ben 48 ore</strong>, per regalarti un gusto autentico e una consistenza unica.  
+                        <br><br>
+                        <strong>Alcune richieste comportano un supplemento:</strong>
+                        <ul class="special-addons">
+                            <li>Mozzarella di Bufala DOP: <strong>+ €1,50</strong></li>
+                            <li>Mozzarella senza lattosio: <strong>+ €1,50</strong></li>
+                            <li>Impasto con bordo alto (stile napoletano): <strong>+ €1,50</strong></li>
+                            <li>Impasto ai cereali: <strong>+ €1,50</strong></li>
+                            <li>Impasto senza glutine: <strong>+ €2,50</strong></li>
+                        </ul>
+                        <br>
+                    </div>
+                    <br>
+                `,
+                categories: [
+                    {
+                        title: "Pizze Base",
+                        icon: "pizza",
+                        items: [
+                            {
+                                name: "Ciccio",
+                                price: "4.00",
+                                description: "Pizza bianca semplice e fragrante, perfetta per chi ama i sapori essenziali",
+                                ingredients: "Impasto pizza, olio EVO, sale, origano"
+                            },
+                            {
+                                name: "Ciccio Rosso",
+                                price: "4.50",
+                                description: "Pizza rossa tradizionale con il sapore autentico del pomodoro",
+                                ingredients: "Pomodoro, olio EVO, origano"
+                            },
+                            {
+                                name: "Marinara",
+                                price: "4.50",
+                                description: "Pizza classica napoletana con pomodoro fresco, aglio profumato e origano",
+                                ingredients: "Pomodoro, aglio, origano, olio EVO"
+                            },
+                            {
+                                name: "Margherita",
+                                price: "5.00",
+                                description: "La regina delle pizze con pomodoro, mozzarella filante e basilico fresco",
+                                ingredients: "Pomodoro, mozzarella, olio EVO"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Pizze Classiche",
+                        icon: "pizza",
+                        items: [
+                            {
+                                name: "Wurstel",
+                                price: "6.00",
+                                description: "Pizza amata da grandi e piccoli con gustosi wurstel di alta qualità",
+                                ingredients: "Pomodoro, mozzarella, wurstel"
+                            },
+                            {
+                                name: "Diavola",
+                                price: "6.00",
+                                description: "Pizza piccante per i palati coraggiosi con salame piccante di qualità",
+                                ingredients: "Pomodoro, mozzarella, salame piccante"
+                            },
+                            {
+                                name: "Champignon",
+                                price: "6.00",
+                                description: "Pizza semplice e delicata con funghi champignon freschi",
+                                ingredients: "Pomodoro, mozzarella, funghi champignon"
+                            },
+                            {
+                                name: "Nduja",
+                                price: "6.00",
+                                description: "Pizza dal sapore intenso con l'autentica nduja calabrese piccante",
+                                ingredients: "Pomodoro, mozzarella, nduja calabrese"
+                            },
+                            {
+                                name: "Carciofina",
+                                price: "6.00",
+                                description: "Pizza mediterranea con teneri carciofi che donano freschezza",
+                                ingredients: "Pomodoro, mozzarella, carciofi"
+                            },
+                            {
+                                name: "Cotto",
+                                price: "6.00",
+                                description: "Pizza tradizionale con prosciutto cotto di alta qualità",
+                                ingredients: "Pomodoro, mozzarella, prosciutto cotto"
+                            },
+                            {
+                                name: "Francese",
+                                price: "6.00",
+                                description: "Pizza raffinata con cremoso formaggio alle erbe aromatiche",
+                                ingredients: "Pomodoro, mozzarella, formaggio alle erbe"
+                            },
+                            {
+                                name: "Romana",
+                                price: "6.00",
+                                description: "Pizza dal gusto mediterraneo con acciughe salate e capperi profumati",
+                                ingredients: "Pomodoro, mozzarella, acciughe, capperi"
+                            },
+                            {
+                                name: "Gorgonzola",
+                                price: "6.00",
+                                description: "Pizza dal sapore intenso con cremoso gorgonzola DOP",
+                                ingredients: "Pomodoro, mozzarella, gorgonzola"
+                            },
+                            {
+                                name: "Patatina",
+                                price: "6.00",
+                                description: "Pizza originale e croccante con patate fritte dorate",
+                                ingredients: "Pomodoro, mozzarella, patate fritte"
+                            },
+                            {
+                                name: "Olive Nere",
+                                price: "6.00",
+                                description: "Pizza mediterranea con olive nere denocciolate dal sapore intenso",
+                                ingredients: "Pomodoro, mozzarella, olive nere (denocciolate)"
+                            },
+                            {
+                                name: "Zucchinella",
+                                price: "6.00",
+                                description: "Pizza leggera con zucchine fresche e croccante pangrattato tarallo",
+                                ingredients: "Pomodoro, mozzarella, zucchine, pangrattato tarallo"
+                            },
+                            {
+                                name: "Peperoni",
+                                price: "6.00",
+                                description: "Pizza colorata con peperoni dolci e pangrattato tarallo croccante",
+                                ingredients: "Pomodoro, mozzarella, peperoni, pangrattato tarallo"
+                            },
+                            {
+                                name: "Melanzane",
+                                price: "6.00",
+                                description: "Pizza mediterranea con melanzane saporite e pangrattato tarallo",
+                                ingredients: "Pomodoro, mozzarella, melanzane, pangrattato tarallo"
+                            },
+                            {
+                                name: "Friarielli",
+                                price: "6.00",
+                                description: "Pizza con friarielli saltati e tarallo sbriciolato",
+                                ingredients: "Pomodoro, mozzarella, friarielli, tarallo"
+                            },
+                            {
+                                name: "Ciliegina (PICCANTE)",
+                                price: "6.00",
+                                description: "Pizza piccante con pomodorini ciliegino dal sapore vivace e speziato",
+                                ingredients: "Pomodoro, mozzarella, pomodorini ciliegino piccanti"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Pizze Speciali",
+                        icon: "pizza",
+                        items: [
+                            {
+                                name: "Crudaiola",
+                                price: "6.50",
+                                description: "Pizza fresca con pomodorini, rucola e scaglie di ricotta marzotica",
+                                ingredients: "Pomodoro, mozzarella, pomodorini, rucola, scaglie di ricotta marzotica"
+                            },
+                            {
+                                name: "Quattro Stagioni",
+                                price: "6.50",
+                                description: "Pizza tradizionale divisa in quattro con prosciutto, funghi, carciofi e olive",
+                                ingredients: "Pomodoro, mozzarella, prosciutto cotto, funghi, carciofi, olive"
+                            },
+                            {
+                                name: "Capricciosa",
+                                price: "6.50",
+                                description: "Pizza ricca e completa con tutti gli ingredienti della tradizione",
+                                ingredients: "Pomodoro, mozzarella, prosciutto cotto, funghi, carciofi, olive"
+                            },
+                            {
+                                name: "Americana",
+                                price: "6.50",
+                                description: "Pizza dal gusto deciso con wurstel e patatine fritte croccanti",
+                                ingredients: "Pomodoro, mozzarella, wurstel, patatine fritte"
+                            },
+                            {
+                                name: "Norcina",
+                                price: "6.50",
+                                description: "Pizza con salsiccia di Norcia. Gusto autentico e irresistibile!",
+                                ingredients: "Pomodoro, mozzarella, salsiccia di Norcia"
+                            },
+                            {
+                                name: "Tonno e Cipolla",
+                                price: "6.50",
+                                description: "Pizza marina con tonno di qualità e cipolla fresca",
+                                ingredients: "Pomodoro, mozzarella, tonno, cipolla"
+                            },
+                            {
+                                name: "Ortolana",
+                                price: "6.50",
+                                description: "Pizza vegetariana con un mix di verdure fresche di stagione",
+                                ingredients: "Pomodoro, mozzarella, zucchine, melanzane, peperoni e pangrattato"
+                            },
+                            {
+                                name: "Norcia e Rape",
+                                price: "6.50",
+                                description: "Pizza rustica con salsiccia di Norcia e cime di rapa barese saporita",
+                                ingredients: "Pomodoro, mozzarella, salsiccia di Norcia, cime di rapa"
+                            },
+                            {
+                                name: "Sannicandrese",
+                                price: "7.00",
+                                description: "Pizza tipica con rape, olive nere denocciolate e ciliegino piccante",
+                                ingredients: "Pomodoro, mozzarella, rape, olive nere (denocciolate), ciliegino piccante"
+                            },
+                            {
+                                name: "Crudo e Bufala",
+                                price: "8.00",
+                                description: "Pizza gourmet con mozzarella di bufala e prosciutto crudo aggiunto dopo cottura",
+                                ingredients: "Pomodoro, mozzarella di bufala, prosciutto crudo (aggiunto dopo cottura), basilico"
+                            },
+                            {
+                                name: "Saporita",
+                                price: "7.00",
+                                description: "Pizza dal sapore intenso con mix di ingredienti mediterranei",
+                                ingredients: "Pomodoro, mozzarella, cipolla, peperoni, tonno, acciughe"
+                            },
+                            {
+                                name: "Bresaola Completa",
+                                price: "7.00",
+                                description: "Pizza raffinata con bresaola, grana, rucola fresca e una spruzzata di limone",
+                                ingredients: "Pomodoro, mozzarella, bresaola (aggiunta dopo cottura), grana, rucola, limone"
+                            },
+                            {
+                                name: "Euro Ciccio",
+                                price: "7.00",
+                                description: "Pizza speciale simbolo di Euro Pizza, con bordo alto e ingredienti di qualità",
+                                ingredients: "BORDO ALTO, mozzarella di bufala, pomodorini ciliegino, basilico"
+                            },
+                            {
+                                name: "Carbonara",
+                                price: "7.00",
+                                description: "Ispirata al celebre piatto romano, regina della tradizione, la Carbonara",
+                                ingredients: "Pomodoro, mozzarella, pancetta, uovo, pepe, scamorza affumicata"
+                            },
+                            {
+                                name: "Bolognese",
+                                price: "7.00",
+                                description: "Pizza gourmet con mortadella, stracciatella e una spolverata di pistacchio",
+                                ingredients: "Pomodoro, mozzarella, mortadella, stracciatella, pistacchio"
+                            },
+                            {
+                                name: "Norvegese",
+                                price: "7.00",
+                                description: "Pizza bianca con salmone e ingredienti freschi",
+                                ingredients: "Mozzarella, philadelphia, salmone, zucchine, tarallo"
+                            },
+                            {
+                                name: "Frutti di Mare",
+                                price: "7.00",
+                                description: "Pizza marina con frutti di mare",
+                                ingredients: "Pomodoro, mozzarella, frutti di mare, ciliegino, tarallo"
+                            },
+                            {
+                                name: "Alto Adige",
+                                price: "7.00",
+                                description: "Pizza con speck e formaggio alle erbe",
+                                ingredients: "Pomodoro, mozzarella, speck (aggiunto dopo cottura), formaggio alle erbe, rucola"
+                            },
+                            {
+                                name: "Principessa",
+                                price: "8.00",
+                                description: "Pizza regale con prosciutto crudo e stracciatella",
+                                ingredients: "Pomodoro, mozzarella, prosciutto crudo (aggiunto dopo cottura), panna, stracciatella"
+                            },
+                            {
+                                name: "Gamberina",
+                                price: "8.00",
+                                description: "Pizza gourmet con gamberi",
+                                ingredients: "Bianca, mozzarella, gamberi sgusciati, tarallo"
+                            },
+                            {
+                                name: "Murgiana",
+                                price: "8.00",
+                                description: "Pizza primaverile dal gusto intenso con base alla crema di zucca",
+                                ingredients: "Bianca, mozzarella, crema di zucca, bacon, funghi cardoncelli, olive nere (denocciolate)"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Pizze Giganti",
+                        icon: "pizza",
+                        items: [
+                            {
+                                name: "Gigante Margherita",
+                                price: "10.00",
+                                description: "La classica Margherita in formato gigante",
+                                ingredients: "Pomodoro, mozzarella"
+                            },
+                            {
+                                name: "Gigante Farcita",
+                                price: "13.00",
+                                description: "Pizza gigante con ingredienti a tua scelta",
+                                ingredients: "Ingredienti personalizzabili con supplemento"
+                            }
+                        ]
+                    }
+                ]
+            },
+            sfizi: {
+                categories: [
+                    {
+                        title: "Arancini",
+                        icon: "fried",
+                        items: [
+                            {
+                                name: "Arancino al Ragù",
+                                price: "2.50",
+                                description: "Croccante fuori e morbido dentro, il nostro arancino siciliano con ragù di carne succulenta e filante mozzarella",
+                                ingredients: "Riso, ragù di carne, mozzarella, pangrattato",
+                                sizes: ["1 pezzo"]
+                            },
+                            {
+                                name: "Arancino Bianco",
+                                price: "2.50",
+                                description: "Una delizia cremosa con prosciutto cotto, mozzarella filante e besciamella, dorato alla perfezione",
+                                ingredients: "Riso, prosciutto cotto, mozzarella, besciamella, pangrattato",
+                                sizes: ["1 pezzo"]
+                            }
+                        ]
+                    },
+                    {
+                        title: "Fritti",
+                        icon: "fried",
+                        items: [
+                            {
+                                name: "Panzerotto",
+                                price: "1.50",
+                                description: "Il classico panzerotto barese, croccante fuori e morbido dentro, con pomodoro fresco e mozzarella filante",
+                                ingredients: "Pomodoro, mozzarella",
+                                sizes: ["1 pezzo"]
+                            },
+                            {
+                                name: "Panzerottini",
+                                price: "3.00",
+                                description: "Piccole bontà fritte, perfette per stuzzicare l'appetito. Croccanti fuori e morbidissimi dentro",
+                                ingredients: "Pomodoro, mozzarella",
+                                sizes: ["5 pezzi"]
+                            },
+                            {
+                                name: "Scagliozze",
+                                price: "3.00",
+                                description: "Le tipiche fette di polenta fritta, croccanti fuori e morbide dentro, un must della tradizione pugliese",
+                                ingredients: "Polenta, olio per friggere, sale",
+                                sizes: ["5 pezzi"]
+                            },
+                            {
+                                name: "Anelli di Cipolla",
+                                price: "3.00",
+                                description: "Cipolle dolci tagliate ad anelli e impanate con una croccante panatura dorata",
+                                ingredients: "Cipolle, farina, uova, pangrattato",
+                                sizes: ["5 pezzi"]
+                            },
+                            {
+                                name: "Crocchè di Patate",
+                                price: "3.00",
+                                description: "Soffici all'interno e croccanti fuori, i nostri crocchè sono preparati con patate fresche",
+                                ingredients: "Patate, uova, pangrattato, spezie",
+                                sizes: ["5 pezzi"]
+                            },
+                            {
+                                name: "Birbe di Pollo",
+                                price: "3.00",
+                                description: "Bocconcini di pollo tenerissimo con doppia panatura croccante, irresistibili con il loro cuore succoso",
+                                ingredients: "Pollo, farina, uova, pangrattato, spezie",
+                                sizes: ["5 pezzi"]
+                            },
+                            {
+                                name: "Chele di Granchio",
+                                price: "3.00",
+                                description: "Crocchette dal sapore di mare, con un delicato gusto di granchio e una panatura dorata e fragrante",
+                                ingredients: "Surimi, pangrattato, spezie",
+                                sizes: ["5 pezzi"]
+                            },
+                            {
+                                name: "Patatine Fritte",
+                                price: "3.50",
+                                description: "Patate fritte al momento, croccanti fuori e morbide dentro, leggermente salate",
+                                ingredients: "Patate, sale, olio per friggere",
+                                sizes: ["Porzione media"]
+                            },
+                            {
+                                name: "Patatine Spirali",
+                                price: "4.00",
+                                description: "Patate tagliate a spirale, croccanti e saporite, con una spolverata di paprica dolce",
+                                ingredients: "Patate, paprica, sale, olio per friggere",
+                                sizes: ["Porzione media"]
+                            }
+                        ]
+                    }
+                ]
+            },
+            dolci: {
+                categories: [
+                    {
+                        title: "Dolci",
+                        icon: "dessert",
+                        items: [
+                            {
+                                name: "Pizza alla Nutella",
+                                price: "6.50",
+                                description: "Pizza dolce con impasto fragrante ricoperta di crema alla nocciola Nutella e una spolverata di zucchero a velo",
+                                ingredients: "Impasto pizza dolce, Nutella, zucchero a velo"
+                            }
+                        ]
+                    }
+                ]
+            },
+            bevande: {
+                categories: [
+                    {
+                        title: "Bibite",
+                        icon: "drink",
+                        items: [
+                            {
+                                name: "Coca Cola",
+                                price: "1.50",
+                                description: "La classica bevanda gassata dal gusto inconfondibile, perfetta per accompagnare pizza e fritti",
+                                sizes: ["Lattina 33cl"]
+                            },
+                            {
+                                name: "Coca Cola Zero",
+                                price: "1.50",
+                                description: "Tutto il gusto della Coca Cola originale senza zuccheri, per chi preferisce una versione leggera",
+                                sizes: ["Lattina 33cl"]
+                            },
+                            {
+                                name: "Fanta",
+                                price: "1.50",
+                                description: "Bevanda gassata all'arancia, fresca e dissetante, dal sapore fruttato e vivace",
+                                sizes: ["Lattina 33cl"]
+                            },
+                            {
+                                name: "Chinotto",
+                                price: "1.50",
+                                description: "Bevanda italiana dal gusto amarognolo e aromatico, perfetta per chi ama i sapori intensi",
+                                sizes: ["Lattina 33cl"]
+                            },
+                            {
+                                name: "Acqua Naturale",
+                                price: "1.00",
+                                description: "Acqua minerale fresca, leggera e purificante, ideale per dissetarsi",
+                                sizes: ["Bottiglia 50cl"]
+                            },
+                            {
+                                name: "Acqua Frizzante",
+                                price: "1.00",
+                                description: "Acqua minerale con bollicine fresche e leggere, ottima per digerire",
+                                sizes: ["Bottiglia 50cl"]
+                            }
+                        ]
+                    },
+                    {
+                        title: "Birre",
+                        icon: "beer",
+                        items: [
+                            {
+                                name: "Nastro Azzurro",
+                                price: "1.50",
+                                description: "Birra premium italiana dal gusto equilibrato e leggero, con un retrogusto leggermente amarognolo",
+                                sizes: ["Bottiglia 33cl"]
+                            },
+                            {
+                                name: "Ichnusa",
+                                price: "1.50",
+                                description: "Birra lager sarda, fresca e dissetante, con un gusto pulito e una lieve nota di malto",
+                                sizes: ["Bottiglia 33cl"]
+                            },
+                            {
+                                name: "Birra al Limone",
+                                price: "1.50",
+                                description: "Birra rinfrescante con una delicata nota di limone, perfetta per l'estate",
+                                sizes: ["Bottiglia 33cl"]
+                            },
+                            {
+                                name: "Peroni Grande",
+                                price: "3.00",
+                                description: "La classica Peroni in formato grande, dal gusto pieno e maltato, con un finale leggermente amarognolo",
+                                sizes: ["Bottiglia 66cl"]
+                            },
+                            {
+                                name: "Corona",
+                                price: "3.00",
+                                description: "Birra messicana leggera e rinfrescante, da gustare con una spruzzata di lime per un'esperienza autentica",
+                                sizes: ["Bottiglia 33cl"]
+                            },
+                            {
+                                name: "Tennents",
+                                price: "3.00",
+                                description: "Birra scozzese dal gusto pulito e fresco, prodotta con orzo locale e acqua purissima",
+                                sizes: ["Bottiglia 33cl"]
+                            },
+                            {
+                                name: "Messina",
+                                price: "3.00",
+                                description: "Birra siciliana dorata e corposa, con una delicata nota salina che la rende unica",
+                                sizes: ["Bottiglia 50cl"]
+                            }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // Cart functionality
+        let cart = [];
+
+        // Function to generate menu items
+        function generateMenuItems() {
+            for (const section in menuData) {
+                const sectionElement = document.getElementById(section);
+
+                // Add intro if exists
+                if (menuData[section].intro) {
+                    sectionElement.innerHTML = menuData[section].intro;
+                }
+
+                // Generate categories
+                menuData[section].categories.forEach(category => {
+                    const categoryHTML = `
+                        <div class="category">
+                            <h2 class="category-title ${category.icon}-icon">${category.title}</h2>
+                            ${category.items.map(item => `
+                                <div class="menu-item" data-name="${item.name}" data-price="${item.price}">
+                                    <div class="item-header">
+                                        <div class="item-name">${item.name}</div>
+                                        <div class="item-price">€${item.price}</div>
+                                    </div>
+                                    <div class="item-description">${item.description}</div>
+                                    <div class="item-ingredients">${item.ingredients}</div>
+                                    ${item.sizes ? `
+                                        <div class="size-options">
+                                            ${item.sizes.map(size => `<span class="size-option">${size}</span>`).join('')}
+                                        </div>
+                                    ` : ''}
+                                    <br><br><button class="add-to-cart-btn" onclick="addToCart('${item.name}', ${item.price})">Aggiungi</button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+
+                    sectionElement.innerHTML += categoryHTML;
+                });
+            }
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+
+        // Cart functions
+        function addToCart(name, price) {
+            const existingItem = cart.find(item => item.name === name);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+                showNotification(`"${name}" aggiunto al carrello (${existingItem.quantity}x)`);
+            } else {
+                cart.push({
+                    name: name,
+                    price: price,
+                    quantity: 1
+                });
+                showNotification(`"${name}" aggiunto al carrello`);
+            }
+
+            updateCart();
+            showCartNotification();
+        }
+
+        function removeFromCart(index) {
+            const removedItem = cart[index];
+            cart.splice(index, 1);
+            updateCart();
+            showNotification(`"${removedItem.name}" rimosso dal carrello`);
+        }
+
+        function updateCartItemQuantity(index, newQuantity) {
+            if (newQuantity > 0) {
+                cart[index].quantity = newQuantity;
+                showNotification(`Quantità di "${cart[index].name}" aggiornata a ${newQuantity}`);
+            } else {
+                const removedItem = cart[index];
+                cart.splice(index, 1);
+                showNotification(`"${removedItem.name}" rimosso dal carrello`);
+            }
+            updateCart();
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCart();
+            showNotification("Carrello svuotato");
+        }
+
+        function updateCart() {
+            const cartItemsElement = document.querySelector('.cart-items');
+            const cartCountElement = document.querySelector('.cart-count');
+            const totalAmountElement = document.querySelector('.total-amount');
+
+            // Update cart items
+            cartItemsElement.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItemsElement.innerHTML = '<p>Il carrello è vuoto</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'cart-item';
+                    itemElement.innerHTML = `
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">€${item.price.toFixed(2)}</div>
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn" onclick="updateCartItemQuantity(${index}, ${item.quantity - 1})">-</button>
+                            <span class="quantity-value">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="updateCartItemQuantity(${index}, ${item.quantity + 1})">+</button>
+                        </div>
+                        <div class="remove-item" onclick="removeFromCart(${index})">✕</div>
+                    `;
+                    cartItemsElement.appendChild(itemElement);
+                });
+            }
+
+            // Update cart count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCountElement.textContent = totalItems;
+
+            // Update total amount
+            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            totalAmountElement.textContent = totalAmount.toFixed(2);
+
+            // Save cart to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function showCartNotification() {
+            const cartBtn = document.querySelector('.cart-btn');
+            cartBtn.classList.add('pulse');
+
+            setTimeout(() => {
+                cartBtn.classList.remove('pulse');
+            }, 500);
+        }
+
+        function toggleCart() {
+            const cartPanel = document.querySelector('.cart-panel');
+            const overlay = document.querySelector('.overlay');
+
+            cartPanel.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        function showCustomerInfoModal() {
+            if (cart.length === 0) {
+                showNotification('Il carrello è vuoto!');
+                return;
+            }
+
+            document.getElementById('customerInfoModal').classList.add('open');
+        }
+
+        function closeCustomerInfoModal() {
+            document.getElementById('customerInfoModal').classList.remove('open');
+        }
+
+        function sendOrder() {
+            const name = document.getElementById('customerName').value;
+            const address = document.getElementById('customerAddress').value;
+            const number = document.getElementById('customerNumber').value;
+
+            if (!name || !address || !number) {
+                showNotification('Compila tutti i campi obbligatori');
+                return;
+            }
+
+            const phoneNumber = "3342900638"; // Numero WhatsApp del ristorante
+            const orderText = generateOrderText(name, address, number);
+            const encodedText = encodeURIComponent(orderText);
+
+            window.open(`https://wa.me/${phoneNumber}?text=${encodedText}`, '_blank');
+            closeCustomerInfoModal();
+        }
+
+        function generateOrderText(name, address, number) {
+            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            let text = "Ciao Euro Pizza & Sfizi, vorrei ordinare:\n\n";
+
+            cart.forEach(item => {
+                text += `- ${item.name} (${item.quantity}x) - €${(item.price * item.quantity).toFixed(2)}\n`;
+            });
+
+            text += `\nInformazioni per la consegna:\n`;
+            text += `👤 Nome: ${name}\n`;
+            text += `📍 Indirizzo: ${address}, ${number}\n\n`;
+            text += "Grazie!";
+
+            return text;
+        }
+
+        // Initialize the menu and cart
+        document.addEventListener('DOMContentLoaded', function () {
+            generateMenuItems();
+
+            // Load cart from localStorage if exists
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCart();
+            }
+        });
+
         function showSection(sectionId) {
-            // Nascondi tutte le sezioni
+            // Hide all sections
             const sections = document.querySelectorAll('.section');
             sections.forEach(section => {
                 section.classList.remove('active');
             });
 
-            // Rimuovi classe active da tutti i bottoni
+            // Remove active class from all buttons
             const buttons = document.querySelectorAll('.nav-btn');
             buttons.forEach(btn => {
                 btn.classList.remove('active');
             });
 
-            // Mostra la sezione selezionata
+            // Show the selected section
             document.getElementById(sectionId).classList.add('active');
 
-            // Aggiungi classe active al bottone corrispondente
+            // Add active class to the corresponding button
             event.target.classList.add('active');
         }
 
-        // Smooth scroll per una migliore esperienza utente
+        // Smooth scroll for better user experience
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.addEventListener('click', function () {
                 window.scrollTo({

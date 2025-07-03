@@ -36,6 +36,7 @@ Per visualizzare il menu:
 2. Oppure apri il file `index.html` in un browser web
 3. Naviga tra le diverse sezioni del menu
 4. Consulta prezzi e descrizioni dei piatti
+5. **Invia la tua ordinazione direttamente tramite WhatsApp** utilizzando l'integrazione API WhatsApp
 
 ## ✨ Caratteristiche
 
@@ -45,6 +46,7 @@ Per visualizzare il menu:
 - Descrizioni dettagliate e appetitose dei piatti
 - Layout moderno e accattivante
 - Caricamento veloce e performance ottimizzate
+- **🆕 Ordinazione diretta tramite WhatsApp API** - Invia il tuo ordine con un semplice click!
 
 ## 📞 Contatti
 
@@ -54,7 +56,7 @@ Per visualizzare il menu:
 
 ## 📝 Note
 
-Questo menu viene aggiornato regolarmente per garantire informazioni sempre accurate. Per informazioni sui prezzi più recenti, disponibilità stagionale o per effettuare ordinazioni, contattare direttamente la pizzeria.
+Questo menu viene aggiornato regolarmente per garantire informazioni sempre accurate. Per informazioni sui prezzi più recenti, disponibilità stagionale o per effettuare ordinazioni, contattare direttamente la pizzeria tramite telefono o utilizzare la funzione di ordinazione integrata tramite WhatsApp.
 
 ---
 
@@ -70,6 +72,29 @@ Questo menu viene aggiornato regolarmente per garantire informazioni sempre accu
 **Anno Accademico:** 2025  
 
 **Competenze tecniche:**
-- HTML
-- CSS
+- HTML5
+- CSS3
 - JavaScript
+- API Integration (WhatsApp)
+- Responsive Web Design
+- GitHub Pages Deployment
+
+---
+
+## 🔧 Funzionalità Avanzate
+
+- **Integrazione WhatsApp API**: Possibilità di inviare l'ordinazione direttamente tramite web utilizzando l'API WhatsApp
+- **Menu Interattivo**: Selezione facilitata dei prodotti con calcolo automatico del totale
+- **Ottimizzazione Mobile**: Design mobile-first per una perfetta fruibilità su smartphone
+- **Caricamento Veloce**: Codice ottimizzato per prestazioni elevate
+
+## 🛠️ Tecnologie Utilizzate
+
+- **Frontend**: HTML5, CSS3, JavaScript ES6+
+- **API**: WhatsApp Business API
+- **Hosting**: GitHub Pages
+- **Version Control**: Git & GitHub
+
+---
+
+*Sviluppato con ❤️ per Euro Pizza & Sfizi*
