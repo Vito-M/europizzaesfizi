@@ -746,6 +746,10 @@
                 <label for="customerNumber">Numero civico*</label>
                 <input type="text" id="customerNumber" required>
             </div>
+            <div class="form-group">
+                <label for="deliveryTime">Orario consegna*</label>
+                <input type="time" id="deliveryTime" required>
+            </div>
             <div class="modal-actions">
                 <button class="modal-btn cancel" onclick="closeCustomerInfoModal()">Annulla</button>
                 <button class="modal-btn confirm" onclick="sendOrder()">Conferma e invia</button>
@@ -1478,23 +1482,22 @@
             const name = document.getElementById('customerName').value;
             const address = document.getElementById('customerAddress').value;
             const number = document.getElementById('customerNumber').value;
+            const deliveryTime = document.getElementById('deliveryTime').value;
 
-            if (!name || !address || !number) {
-                showNotification('Compila tutti i campi obbligatori', true); // Aggiunto true per il rosso
+            if (!name || !address || !number || !deliveryTime) {
+                showNotification('Compila tutti i campi obbligatori', true);
                 return;
             }
 
             const phoneNumber = "3342900638";
-            const orderText = generateOrderText(name, address, number);
+            const orderText = generateOrderText(name, address, number, deliveryTime);
             const encodedText = encodeURIComponent(orderText);
 
             window.open(`https://wa.me/${phoneNumber}?text=${encodedText}`, '_blank');
             closeCustomerInfoModal();
         }
 
-        function generateOrderText(name, address, number) {
-            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
+        function generateOrderText(name, address, number, deliveryTime) {
             let text = "Ciao Euro Pizza & Sfizi, vorrei ordinare:\n\n";
 
             cart.forEach(item => {
@@ -1504,7 +1507,9 @@
             text += `\nInformazioni per la consegna:\n`;
             text += `- Nome: ${name}\n`;
             text += `- Indirizzo: ${address}, ${number}\n`;
-            text += "\nGrazie!";
+            text += `- Orario consegna: ${deliveryTime}\n\n`;
+            text += "È possibile ricevere l'ordine?\n";
+            text += "Grazie!";
 
             return text;
         }
