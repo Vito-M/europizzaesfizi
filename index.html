@@ -757,6 +757,16 @@
         </div>
     </div>
 
+    <div class="modal" id="timeErrorModal">
+        <div class="modal-content">
+            <h3 class="modal-title">Orario non valido</h3>
+            <p>L'orario di consegna deve essere compreso tra le 19:00 e le 23:00.</p>
+            <div class="modal-actions">
+                <button class="modal-btn cancel" onclick="closeTimeErrorModal()">Chiudi</button>
+            </div>
+        </div>
+    </div>
+
     <div class="nav">
         <button class="nav-btn active" onclick="showSection('pizze')">Pizze</button>
         <button class="nav-btn" onclick="showSection('sfizi')">Sfizi</button>
@@ -1478,6 +1488,15 @@
             document.getElementById('customerInfoModal').classList.remove('open');
         }
 
+        // Funzioni per gestire il modale di errore
+        function showTimeErrorModal() {
+            document.getElementById('timeErrorModal').classList.add('open');
+        }
+
+        function closeTimeErrorModal() {
+            document.getElementById('timeErrorModal').classList.remove('open');
+        }
+
         function sendOrder() {
             const name = document.getElementById('customerName').value;
             const address = document.getElementById('customerAddress').value;
@@ -1486,6 +1505,17 @@
 
             if (!name || !address || !number || !deliveryTime) {
                 showNotification('Compila tutti i campi obbligatori', true);
+                return;
+            }
+
+            // Validazione orario solo al momento dell'invio
+            const timeParts = deliveryTime.split(':');
+            const hours = parseInt(timeParts[0]);
+            const minutes = parseInt(timeParts[1]) || 0;
+
+            // Verifica che l'orario sia tra le 19:00 e le 23:00
+            if (hours < 19 || hours >= 23) {
+                showTimeErrorModal();
                 return;
             }
 
