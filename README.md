@@ -57,6 +57,9 @@ nell'oggetto `CONFIG`.
   fascia determina anche gli orari selezionabili per la consegna.
 - `OPEN_FROM` e `OPEN_TO`: gli orari di apertura mostrati all'utente nel modale
   di chiusura. Attualmente dalle `19:00` alle `23:00`.
+- `DELIVERY_FROM` e `DELIVERY_TO`: la fascia oraria selezionabile per la consegna
+  nella schermata dei dati. Attualmente dalle `19:00` alle `23:30`, con slot ogni
+  15 minuti.
 
 All'apertura del sito, se il giorno è di chiusura o l'ora è fuori dalla fascia di
 ordinazione, compare un modale informativo. Il menu resta comunque sfogliabile.

@@ -38,9 +38,7 @@ body{
 
 /* Header */
 header{
-  position:sticky;top:0;z-index:30;
-  background:rgba(250,248,245,.85);
-  backdrop-filter:saturate(150%) blur(12px);
+  background:var(--bg);
   border-bottom:1px solid var(--line);
   padding:14px 18px 12px;
 }
@@ -54,7 +52,7 @@ header p{margin:2px 0 0;color:var(--muted);font-size:13px}
 
 /* Tabs */
 .tabs{
-  display:flex;gap:6px;position:sticky;top:78px;z-index:25;
+  display:flex;gap:6px;position:sticky;top:0;z-index:25;
   padding:12px 14px;background:var(--bg);
   border-bottom:1px solid var(--line);
 }
@@ -76,13 +74,14 @@ header p{margin:2px 0 0;color:var(--muted);font-size:13px}
 .supp-chip.on::before{content:"✓";font-size:12px}
 
 /* List */
-main{padding:18px 14px 0}
+main{padding:18px 14px 50vh}
 .section-title{
-  position:sticky;top:128px;z-index:20;
+  position:sticky;top:62px;z-index:20;
   font-family:var(--font-display);font-size:14px;font-weight:600;
   color:var(--muted);text-transform:uppercase;letter-spacing:.1em;
-  margin:0 0 12px;padding:8px 4px;
-  background:linear-gradient(to bottom, var(--bg) 75%, rgba(250,248,245,0));
+  margin:0 -14px 12px;padding:10px 18px;
+  background:var(--bg);
+  box-shadow:0 1px 0 var(--line), 0 6px 8px -6px rgba(26,22,20,.12);
   display:flex;align-items:center;gap:8px;
 }
 .section-title::before{content:"";width:18px;height:2px;background:var(--accent);border-radius:2px}
@@ -400,7 +399,10 @@ const CONFIG = Object.freeze({
   ORDER_TO: "22:30",
   // Orari di apertura MOSTRATI nel modale all'utente
   OPEN_FROM: "19:00",
-  OPEN_TO: "23:00"
+  OPEN_TO: "23:00",
+  // Fascia oraria selezionabile per la CONSEGNA al checkout
+  DELIVERY_FROM: "19:00",
+  DELIVERY_TO: "23:30"
 });
 /* ==================================================================== */
 
@@ -762,15 +764,15 @@ $('#successDone').addEventListener('click', () => {
 $('#closedDone').addEventListener('click', () => closeOverlay('closedOverlay'));
 
 /* Popola il selettore dell'orario di consegna con slot da 15 minuti
-   entro la fascia in cui si può ordinare */
+   entro la fascia di consegna configurata */
 function buildTimeOptions(){
   const sel = $('#fTime');
   sel.textContent = '';
   const placeholder = el('option', null, 'Seleziona un orario');
   placeholder.value = '';
   sel.appendChild(placeholder);
-  const start = toMinutes(CONFIG.ORDER_FROM);
-  const end = toMinutes(CONFIG.ORDER_TO);
+  const start = toMinutes(CONFIG.DELIVERY_FROM);
+  const end = toMinutes(CONFIG.DELIVERY_TO);
   for(let m = start; m <= end; m += 15){
     const h = String(Math.floor(m / 60)).padStart(2, '0');
     const mm = String(m % 60).padStart(2, '0');
