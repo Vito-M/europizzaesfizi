@@ -1,1701 +1,574 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Digitale - Euro Pizza & Sfizi</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #ff6b6b, #ffa500);
-            min-height: 100vh;
-            color: #333;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            min-height: 100vh;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 1;
-            /* Aggiungi questa riga */
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                max-width: 100%;
-                box-shadow: none;
-            }
-        }
-
-        .header {
-            background: linear-gradient(135deg, #c0392b, #e74c3c);
-            color: white;
-            text-align: center;
-            padding: 2rem 1rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .header h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .header p {
-            opacity: 0.9;
-            font-size: 1.1rem;
-        }
-
-        .nav {
-            display: flex;
-            background: #2c3e50;
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 800px;
-            z-index: 1000;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .nav.hidden {
-            transform: translateX(-50%) translateY(100%);
-        }
-
-        @media (max-width: 800px) {
-            .nav {
-                left: 0;
-                transform: none;
-                max-width: 100%;
-            }
-        }
-
-        .bottom-spacer {
-            height: 80px;
-        }
-
-        .nav-btn {
-            flex: 1;
-            padding: 1.2rem;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-top: 3px solid transparent;
-        }
-
-        @media (max-width: 600px) {
-            .nav-btn {
-                font-size: 0.9rem;
-                padding: 1rem 0.5rem;
-            }
-        }
-
-        .nav-btn.active {
-            background: #34495e;
-            border-top-color: #e74c3c;
-        }
-
-        .nav-btn:hover {
-            background: #34495e;
-        }
-
-        .section {
-            display: none;
-            padding: 2rem;
-        }
-
-        @media (max-width: 768px) {
-            .section {
-                padding: 1rem;
-            }
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        .category {
-            margin-bottom: 2rem;
-        }
-
-        .category-title {
-            font-size: 1.5rem;
-            color: #c0392b;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #e74c3c;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .menu-item {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid #e74c3c;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            position: relative;
-        }
-
-        @media (max-width: 768px) {
-            .menu-item {
-                padding: 1rem;
-                margin-bottom: 1rem;
-            }
-        }
-
-        .menu-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 0.5rem;
-        }
-
-        .item-name {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #2c3e50;
-            flex: 1;
-        }
-
-        .item-price {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #e74c3c;
-            margin-left: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .item-name {
-                font-size: 1.2rem;
-            }
-
-            .item-price {
-                font-size: 1.3rem;
-            }
-        }
-
-        .item-description {
-            color: #666;
-            font-size: 0.95rem;
-            line-height: 1.4;
-            margin-top: 0.5rem;
-        }
-
-        .item-ingredients {
-            color: #888;
-            font-size: 0.85rem;
-            font-style: italic;
-            margin-top: 0.3rem;
-        }
-
-        .pizza-icon::before {
-            content: "🍕";
-            margin-right: 0.5rem;
-        }
-
-        .drink-icon::before {
-            content: "🥤";
-            margin-right: 0.5rem;
-        }
-
-        .beer-icon::before {
-            content: "🍺";
-            margin-right: 0.5rem;
-        }
-
-        .fried-icon::before {
-            content: "🍤";
-            margin-right: 0.5rem;
-        }
-
-        .dessert-icon::before {
-            content: "🍰";
-            margin-right: 0.5rem;
-        }
-
-        .footer {
-            background: #2c3e50;
-            color: white;
-            text-align: center;
-            padding: 2rem 1rem;
-            margin-top: 2rem;
-        }
-
-        .footer p {
-            margin-bottom: 0.5rem;
-        }
-
-        .copyright {
-            background: #1a252f;
-            color: #95a5a6;
-            text-align: center;
-            padding: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .copyright p {
-            margin: 0;
-        }
-
-        .size-options {
-            display: flex;
-            gap: 1rem;
-            margin-top: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .size-option {
-            background: #f8f9fa;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #666;
-            border: 1px solid #e9ecef;
-        }
-
-        @media (max-width: 480px) {
-            .header {
-                padding: 1.5rem 1rem;
-            }
-
-            .header h1 {
-                font-size: 1.8rem;
-            }
-
-            .item-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .item-price {
-                margin-left: 0;
-                margin-top: 0.3rem;
-            }
-        }
-
-        .special-addons {
-            list-style-type: disc;
-            margin-left: 1em;
-            padding-top: 0.5em;
-        }
-
-        .special-addons li {
-            margin-bottom: 0.4em;
-        }
-
-        .footer .telefono {
-            color: #f1c40f;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        .cart-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: white;
-            color: black;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #f1c40f;
-            color: #2c3e50;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .cart-panel {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 400px;
-            height: 100%;
-            background: white;
-            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 1001;
-            transition: right 0.3s ease;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .cart-panel.open~.container .nav {
-            transform: translateX(-50%) translateY(100%);
-        }
-
-        @media (max-width: 500px) {
-            .cart-panel {
-                width: 100%;
-                right: -100%;
-            }
-        }
-
-        .cart-panel.open {
-            right: 0;
-        }
-
-        .cart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .cart-title {
-            font-size: 1.5rem;
-            color: #2c3e50;
-        }
-
-        .close-cart {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #7f8c8d;
-        }
-
-        .cart-items {
-            margin-bottom: 20px;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .cart-item-name {
-            flex: 1;
-        }
-
-        .cart-item-price {
-            margin: 0 10px;
-        }
-
-        .cart-item-quantity {
-            display: flex;
-            align-items: center;
-        }
-
-        .quantity-btn {
-            background: #f1f1f1;
-            border: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .quantity-value {
-            margin: 0 10px;
-        }
-
-        .remove-item {
-            margin-left: 10px;
-            color: #e74c3c;
-            cursor: pointer;
-        }
-
-        .cart-total {
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-align: right;
-            margin-top: 20px;
-            padding-top: 10px;
-            border-top: 1px solid #eee;
-        }
-
-        .cart-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .checkout-btn {
-            background: #27ae60;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
-        .clear-cart-btn {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .add-to-cart-btn {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: #27ae60;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 10px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .add-to-cart-btn:hover {
-            background: #2ecc71;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 998;
-            display: none;
-        }
-
-        .overlay.active {
-            display: block;
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #27ae60;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 5px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            z-index: 2000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            font-weight: bold;
-            text-align: center;
-            max-width: 90%;
-        }
-
-        .notification.error {
-            background: #e74c3c;
-        }
-
-        .notification.show {
-            opacity: 1;
-        }
-
-        .cart-btn.pulse {
-            animation: pulse 0.5s ease;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.1);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1002;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.open {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 500px;
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .modal-btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .modal-btn.cancel {
-            background: #e74c3c;
-            color: white;
-        }
-
-        .modal-btn.confirm {
-            background: #27ae60;
-            color: white;
-        }
-
-        .total-note {
-            font-size: 0.9rem;
-            color: #7f8c8d;
-            margin-top: 5px;
-            font-style: italic;
-        }
-
-        .rem-note {
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-align: right;
-            margin-top: 20px;
-            padding-top: 10px;
-            border-top: 1px solid #eee;
-            font-size: 0.9rem;
-            color: #7f8c8d;
-            margin-top: 5px;
-            font-style: italic;
-        }
-
-        /* Stili per la scelta del tipo di ordine */
-        .order-type-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .order-type-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .order-type-btn.delivery {
-            background: #3498db;
-            color: white;
-        }
-
-        .order-type-btn.pickup {
-            background: #f39c12;
-            color: white;
-        }
-
-        .order-type-btn.active {
-            transform: scale(1.05);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Euro Pizza &amp; Sfizi — Ordina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf8f5;
+  --surface:#ffffff;
+  --ink:#1a1614;
+  --muted:#7a726b;
+  --line:#ece7e0;
+  --accent:#d6452f;
+  --accent-dark:#b3361f;
+  --green:#1f9d55;
+  --radius:16px;
+  --shadow:0 1px 2px rgba(26,22,20,.04), 0 8px 30px rgba(26,22,20,.06);
+  --font-display:'Fraunces',Georgia,serif;
+  --font-body:'Manrope',-apple-system,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.45;
+  padding-bottom:96px;
+  overscroll-behavior-y:contain;
+}
+.app{max-width:520px;margin:0 auto;min-height:100vh}
+
+/* Header */
+header{
+  position:sticky;top:0;z-index:30;
+  background:rgba(250,248,245,.85);
+  backdrop-filter:saturate(150%) blur(12px);
+  border-bottom:1px solid var(--line);
+  padding:14px 18px 12px;
+}
+header h1{
+  font-family:var(--font-display);
+  font-weight:600;font-size:24px;margin:0;letter-spacing:-.02em;
+  display:flex;align-items:center;gap:8px;
+}
+header h1 .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);display:inline-block}
+header p{margin:2px 0 0;color:var(--muted);font-size:13px}
+
+/* Tabs */
+.tabs{
+  display:flex;gap:6px;position:sticky;top:78px;z-index:25;
+  padding:12px 14px;background:var(--bg);
+  border-bottom:1px solid var(--line);
+}
+.tab{
+  flex:1;border:none;background:transparent;color:var(--muted);
+  font-family:var(--font-body);font-weight:600;font-size:13px;
+  padding:10px 2px;border-radius:10px;cursor:pointer;transition:.2s;
+}
+.tab.active{background:var(--ink);color:#fff}
+.intro{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 16px;margin:0 4px 16px;font-size:12.5px;color:var(--muted);line-height:1.5;
+}
+
+/* List */
+main{padding:18px 14px 0}
+.section-title{
+  font-family:var(--font-display);font-size:15px;font-weight:600;
+  color:var(--muted);text-transform:uppercase;letter-spacing:.08em;
+  margin:6px 4px 12px;
+}
+.card{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;
+  display:flex;gap:12px;align-items:flex-start;box-shadow:var(--shadow);
+}
+.card .info{flex:1;min-width:0}
+.card .name{font-weight:700;font-size:15.5px}
+.card .desc{color:var(--muted);font-size:13px;margin-top:2px}
+.card .price{font-family:var(--font-display);font-weight:600;font-size:15px;margin-top:6px}
+.card .actions{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.btn-add{
+  border:none;background:var(--accent);color:#fff;font-weight:700;font-size:13px;
+  padding:8px 14px;border-radius:10px;cursor:pointer;transition:.15s;white-space:nowrap;
+}
+.btn-add:active{transform:scale(.95);background:var(--accent-dark)}
+.btn-edit{
+  border:1px solid var(--line);background:var(--surface);color:var(--ink);
+  font-weight:600;font-size:12px;padding:6px 12px;border-radius:9px;cursor:pointer;
+  display:flex;align-items:center;gap:4px;
+}
+.btn-edit:active{background:var(--bg)}
+
+/* Floating cart bar */
+.cartbar{
+  position:fixed;bottom:0;left:0;right:0;z-index:40;
+  max-width:520px;margin:0 auto;padding:12px 14px 18px;
+  background:linear-gradient(to top, var(--bg) 70%, transparent);
+}
+.cartbar-inner{
+  background:var(--ink);color:#fff;border-radius:14px;
+  padding:14px 18px;display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 10px 30px rgba(26,22,20,.25);cursor:pointer;
+}
+.cartbar-inner.hidden{display:none}
+.cartbar .count{
+  background:var(--accent);font-weight:700;font-size:13px;
+  padding:3px 9px;border-radius:20px;margin-right:10px;
+}
+.cartbar .total{font-family:var(--font-display);font-weight:600;font-size:18px}
+.cartbar .go{font-weight:700;font-size:14px;opacity:.9}
+
+/* Sheets / modals */
+.overlay{
+  position:fixed;inset:0;z-index:50;background:rgba(26,22,20,.45);
+  display:none;align-items:flex-end;justify-content:center;
+}
+.overlay.open{display:flex}
+.sheet{
+  background:var(--bg);width:100%;max-width:520px;max-height:92vh;
+  border-radius:22px 22px 0 0;overflow-y:auto;
+  animation:slideUp .28s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.sheet-head{
+  position:sticky;top:0;background:var(--bg);padding:18px 18px 12px;
+  display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);
+}
+.sheet-head h2{font-family:var(--font-display);font-weight:600;font-size:21px;margin:0}
+.close{border:none;background:var(--line);width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;color:var(--ink)}
+.sheet-body{padding:16px 18px 24px}
+
+/* Cart items */
+.citem{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.citem:last-child{border-bottom:none}
+.citem .ci-info{flex:1}
+.citem .ci-name{font-weight:700;font-size:15px}
+.citem .ci-note{color:var(--accent-dark);font-size:12.5px;margin-top:3px;font-style:italic}
+.citem .ci-price{font-family:var(--font-display);font-weight:600;margin-top:4px}
+.qty{display:flex;align-items:center;gap:10px}
+.qty button{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-size:16px;font-weight:700;cursor:pointer;color:var(--ink)}
+.qty span{min-width:18px;text-align:center;font-weight:700}
+.empty{text-align:center;color:var(--muted);padding:40px 0}
+
+.totals{margin-top:14px;padding-top:14px;border-top:2px solid var(--ink)}
+.totals .row{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:6px}
+.totals .grand{display:flex;justify-content:space-between;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--ink);margin-top:6px}
+.note-disc{font-size:11.5px;color:var(--muted);margin-top:8px;line-height:1.4}
+
+/* Inputs */
+label{display:block;font-weight:600;font-size:13px;margin:14px 0 5px}
+input,textarea{
+  width:100%;border:1px solid var(--line);background:var(--surface);
+  border-radius:11px;padding:12px 14px;font-family:var(--font-body);font-size:15px;color:var(--ink);
+}
+input:focus,textarea:focus{outline:none;border-color:var(--accent)}
+textarea{resize:vertical;min-height:70px}
+
+.gdpr{
+  background:#fff;border:1px dashed var(--line);border-radius:12px;
+  padding:13px 14px;margin-top:18px;font-size:12.5px;color:var(--muted);line-height:1.5;
+}
+.gdpr b{color:var(--ink)}
+
+.btn-primary{
+  width:100%;border:none;background:var(--green);color:#fff;
+  font-family:var(--font-body);font-weight:700;font-size:16px;
+  padding:15px;border-radius:13px;cursor:pointer;margin-top:18px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-primary:active{transform:scale(.99)}
+.btn-primary:disabled{opacity:.45}
+.btn-ghost{
+  width:100%;border:1px solid var(--line);background:transparent;color:var(--ink);
+  font-weight:600;font-size:14px;padding:13px;border-radius:13px;cursor:pointer;margin-top:10px;
+}
+
+/* edit modal */
+.modal-center{align-items:center;padding:18px}
+.modal-box{
+  background:var(--bg);border-radius:20px;width:100%;max-width:420px;
+  padding:20px;animation:pop .2s ease;
+}
+@keyframes pop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-box h3{font-family:var(--font-display);font-weight:600;font-size:19px;margin:0 0 4px}
+.modal-box p.sub{color:var(--muted);font-size:13px;margin:0 0 10px}
+
+/* success */
+.success-box{text-align:center;padding:10px 6px}
+.success-box .ck{
+  width:64px;height:64px;border-radius:50%;background:var(--green);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 14px;
+}
+.success-box h3{font-family:var(--font-display);font-weight:600;font-size:22px;margin:0 0 8px}
+.success-box p{color:var(--muted);font-size:14px;line-height:1.55;margin:0 0 6px}
+.success-box .warn{
+  background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;
+  border-radius:12px;padding:12px;font-size:13px;margin-top:14px;line-height:1.5;
+}
+</style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="logo">
-                <img src="img/logo.png" alt="Logo Euro Pizza & Sfizi"
-                    style="height: 250px; margin-bottom: 1rem; border-radius: 8px;" onerror="this.style.display='none'">
-            </div>
-            <h1>🍕 Euro Pizza & Sfizi</h1>
-            <p>Menu Digitale</p>
-        </div>
+<div class="app">
+  <header>
+    <h1><span class="dot"></span>Euro Pizza &amp; Sfizi</h1>
+    <p>Ordina online — ritiro o consegna a domicilio</p>
+  </header>
 
-        <div id="pizze" class="section active"></div>
-        <div id="sfizi" class="section"></div>
-        <div id="dolci" class="section"></div>
-        <div id="bevande" class="section"></div>
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-cat="pizze">Pizze</button>
+    <button class="tab" data-cat="sfizi">Sfizi</button>
+    <button class="tab" data-cat="dolci">Dolci</button>
+    <button class="tab" data-cat="bevande">Bevande</button>
+  </div>
+
+  <main id="menuList"></main>
+</div>
+
+<!-- Floating cart -->
+<div class="cartbar">
+  <div class="cartbar-inner hidden" id="cartBar">
+    <div style="display:flex;align-items:center">
+      <span class="count" id="cartCount">0</span>
+      <span class="total" id="cartTotalMini">€0.00</span>
     </div>
+    <span class="go">Vedi carrello →</span>
+  </div>
+</div>
 
-    <div class="footer">
-        <p><strong>Euro Pizza & Sfizi</strong></p>
-        <p>📍 Corso Vittorio Emanuele III, 76, Sannicandro di Bari</p>
-        <p>📞 <a href="tel:0809934688" class="telefono">080 993 4688</a></p>
-        <p>📱 WhatsApp: <a href="tel:3342900638" class="telefono">3342900638</a></p>
-        <p>🕒 Aperto da mercoledì a lunedì 19:30 - 23:00</p>
-        <p>Chiuso il martedì</p>
+<!-- Edit modal -->
+<div class="overlay modal-center" id="editOverlay">
+  <div class="modal-box">
+    <h3 id="editTitle">Modifica</h3>
+    <p class="sub">Scrivi qui eventuali richieste particolari (es. senza basilico, ben cotta, aggiungi funghi…)</p>
+    <textarea id="editNote" placeholder="Le tue modifiche..."></textarea>
+    <button class="btn-primary" style="background:var(--accent)" id="editConfirm">Aggiungi al carrello</button>
+    <button class="btn-ghost" id="editCancel">Annulla</button>
+  </div>
+</div>
+
+<!-- Cart sheet -->
+<div class="overlay" id="cartOverlay">
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2>Il tuo carrello</h2>
+      <button class="close" data-close="cartOverlay">×</button>
     </div>
-
-    <div class="copyright">
-        <p>© 2025 Vito Marchionna - Tutti i diritti riservati</p>
+    <div class="sheet-body">
+      <div id="cartItems"></div>
+      <div class="totals" id="cartTotals"></div>
+      <button class="btn-primary" id="goCheckout">Procedi all'ordine</button>
     </div>
+  </div>
+</div>
 
-    <div class="bottom-spacer"></div>
-
-    <!-- Notifica -->
-    <div class="notification" id="notification"></div>
-
-    <!-- Bottone carrello -->
-    <button class="cart-btn" onclick="toggleCart()">
-        🛒
-        <span class="cart-count">0</span>
-    </button>
-
-    <!-- Pannello carrello -->
-    <div class="overlay" onclick="toggleCart()"></div>
-    <div class="cart-panel">
-        <div class="rem-note">* Per modifiche agli ingredienti, specificare nella chat WhatsApp al momento dell'ordine.
-        </div>
-        <br>
-        <div class="cart-header">
-            <h2 class="cart-title">Il tuo ordine</h2>
-            <button class="close-cart" onclick="toggleCart()">×</button>
-        </div>
-        <div class="cart-items">
-            <!-- Gli elementi del carrello verranno aggiunti qui dinamicamente -->
-        </div>
-        <div class="cart-total">
-            Totale: €<span class="total-amount">0.00</span>
-            <div class="total-note">* Il totale è indicativo e potrebbe variare in base alla consegna e modifiche
-                aggiuntive</div>
-        </div>
-        <div class="cart-actions">
-            <button class="checkout-btn" onclick="showOrderTypeModal()">Invia ordine via WhatsApp</button>
-            <button class="clear-cart-btn" onclick="clearCart()">Svuota carrello</button>
-        </div>
+<!-- Checkout sheet -->
+<div class="overlay" id="checkoutOverlay">
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2>I tuoi dati</h2>
+      <button class="close" data-close="checkoutOverlay">×</button>
     </div>
+    <div class="sheet-body">
+      <label for="fName">Nome *</label>
+      <input id="fName" type="text" placeholder="Mario">
+      <label for="fSurname">Cognome *</label>
+      <input id="fSurname" type="text" placeholder="Rossi">
+      <label for="fAddr">Via e numero civico *</label>
+      <input id="fAddr" type="text" placeholder="Via Roma 12">
 
-    <!-- Modal per scegliere il tipo di ordine -->
-    <div class="modal" id="orderTypeModal">
-        <div class="modal-content">
-            <h3 class="modal-title">Tipo di ordine</h3>
-            <div class="order-type-buttons">
-                <button class="order-type-btn delivery active" onclick="selectOrderType('delivery')">Domicilio</button>
-                <button class="order-type-btn pickup" onclick="selectOrderType('pickup')">Banco</button>
-            </div>
-            <div id="deliveryFields">
-                <div class="form-group">
-                    <label for="customerName">Nome e Cognome*</label>
-                    <input type="text" id="customerName" required>
-                </div>
-                <div class="form-group">
-                    <label for="customerAddress">Indirizzo*</label>
-                    <input type="text" id="customerAddress" placeholder="Via/Piazza" required>
-                </div>
-                <div class="form-group">
-                    <label for="customerNumber">Numero civico*</label>
-                    <input type="text" id="customerNumber" required>
-                </div>
-                <div class="form-group">
-                    <label for="deliveryTime">Orario consegna*</label>
-                    <input type="time" id="deliveryTime" required>
-                </div>
-            </div>
-            <div id="pickupFields" style="display: none;">
-                <div class="form-group">
-                    <label for="pickupName">Nome e Cognome*</label>
-                    <input type="text" id="pickupName" required>
-                </div>
-                <div class="form-group">
-                    <label for="pickupTime">Orario ritiro*</label>
-                    <input type="time" id="pickupTime" required>
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn cancel" onclick="closeOrderTypeModal()">Annulla</button>
-                <button class="modal-btn confirm" onclick="sendOrder()">Conferma e invia</button>
-            </div>
-        </div>
+      <div class="gdpr">
+        <b>Privacy (GDPR).</b> I dati inseriti (nome, cognome, indirizzo)
+        <b>non vengono salvati né memorizzati</b> da questo sito o su alcun server.
+        Vengono usati <b>solo</b> per comporre il messaggio WhatsApp che invii tu
+        direttamente alla pizzeria, restando sul tuo dispositivo. Chiudendo la pagina
+        ogni informazione viene cancellata.
+      </div>
+
+      <button class="btn-primary" id="sendWhatsapp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.84 9.84 0 001.51 5.26l-.999 3.648 3.978-1.045zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+        Invia ordine su WhatsApp
+      </button>
+      <button class="btn-ghost" data-close="checkoutOverlay">Torna indietro</button>
     </div>
+  </div>
+</div>
 
-    <!-- Modal per errore orario -->
-    <div class="modal" id="timeErrorModal">
-        <div class="modal-content">
-            <h3 class="modal-title">Orario non valido</h3>
-            <p>L'orario di consegna/ritiro deve essere compreso tra le 19:00 e le 23:00.</p>
-            <div class="modal-actions">
-                <button class="modal-btn cancel" onclick="closeTimeErrorModal()">Chiudi</button>
-            </div>
-        </div>
+<!-- Success modal -->
+<div class="overlay modal-center" id="successOverlay">
+  <div class="modal-box">
+    <div class="success-box">
+      <div class="ck">✓</div>
+      <h3>Ordine inviato!</h3>
+      <p>Il tuo ordine è stato inoltrato su WhatsApp alla pizzeria.</p>
+      <div class="warn">
+        ⚠️ <b>L'ordine non è ancora confermato.</b> Attendi la risposta della pizzeria
+        su WhatsApp: ti confermeranno se è possibile prenderlo in carico, i tempi e
+        il totale definitivo (eventuali modifiche verranno conteggiate al momento).
+      </div>
+      <button class="btn-primary" id="successDone">Ho capito</button>
     </div>
+  </div>
+</div>
 
-    <div class="nav">
-        <button class="nav-btn active" onclick="showSection('pizze')">Pizze</button>
-        <button class="nav-btn" onclick="showSection('sfizi')">Sfizi</button>
-        <button class="nav-btn" onclick="showSection('dolci')">Dolci</button>
-        <button class="nav-btn" onclick="showSection('bevande')">Bevande</button>
-    </div>
+<script>
+/* ====================================================================
+   CONFIGURAZIONE — MODIFICA QUI
+   ====================================================================
+   Inserisci il numero con prefisso internazionale, SENZA "+" e SENZA spazi.
+   Esempio per l'Italia: 393331234567
+   Il valore è bloccato (Object.freeze) e non può essere modificato a runtime. */
+const CONFIG = Object.freeze({
+  WHATSAPP_NUMBER: "39XXXXXXXXXX",
+  DELIVERY_FEE: 1.00
+});
+/* ==================================================================== */
 
-    <script>
-        // Data structure for the menu
-        const menuData = {
-            pizze: {
-                intro: `
-                    <div class="item-description">
-                        <strong>Le nostre buonissime pizze sono preparate con cura e lievitate per ben 48 ore</strong>, per regalarti un gusto autentico e una consistenza unica.  
-                        <br><br>
-                        <strong>Alcune richieste comportano un supplemento:</strong>
-                        <ul class="special-addons">
-                            <li>Mozzarella di Bufala DOP: <strong>+ €1,50</strong></li>
-                            <li>Mozzarella senza lattosio: <strong>+ €1,50</strong></li>
-                            <li>Impasto con bordo alto (stile napoletano): <strong>+ €1,50</strong></li>
-                            <li>Impasto ai cereali: <strong>+ €1,00</strong></li>
-                            <li>Impasto senza glutine: <strong>+ €2,50</strong></li>
-                        </ul>
-                        <br>
-                    </div>
-                    <br>
-                `,
-                categories: [
-                    {
-                        title: "Pizze Base",
-                        icon: "pizza",
-                        items: [
-                            {
-                                name: "Ciccio",
-                                price: 4.00,
-                                description: "Pizza bianca semplice e fragrante, perfetta per chi ama i sapori essenziali",
-                                ingredients: "Impasto pizza, olio EVO, sale, origano"
-                            },
-                            {
-                                name: "Ciccio Rosso",
-                                price: 4.50,
-                                description: "Pizza rossa tradizionale con il sapore autentico del pomodoro",
-                                ingredients: "Pomodoro, olio EVO, origano"
-                            },
-                            {
-                                name: "Marinara",
-                                price: 4.50,
-                                description: "Pizza classica napoletana con pomodoro fresco, aglio profumato e origano",
-                                ingredients: "Pomodoro, aglio, origano, olio EVO"
-                            },
-                            {
-                                name: "Margherita",
-                                price: 5.00,
-                                description: "La regina delle pizze con pomodoro, mozzarella filante e basilico fresco",
-                                ingredients: "Pomodoro, mozzarella, olio EVO"
-                            },
-                            {
-                                name: "Panzerotto al forno (grande)",
-                                price: 5.00,
-                                description: "Soffice e dorato, ripieno di pomodoro fresco e mozzarella filante, accompagnato da croccanti patatine fritte.",
-                                ingredients: "Pomodoro, mozzarella, basilico fresco, olio EVO"
-                            }
-                        ]
-                    },
-                    {
-                        title: "Pizze Classiche",
-                        icon: "pizza",
-                        items: [
-                            {
-                                name: "Wurstel",
-                                price: 6.00,
-                                description: "Pizza amata da grandi e piccoli con gustosi wurstel di alta qualità",
-                                ingredients: "Pomodoro, mozzarella, wurstel"
-                            },
-                            {
-                                name: "Diavola",
-                                price: 6.00,
-                                description: "Pizza piccante per i palati coraggiosi con salame piccante di qualità",
-                                ingredients: "Pomodoro, mozzarella, salame piccante"
-                            },
-                            {
-                                name: "Champignon",
-                                price: 6.00,
-                                description: "Pizza semplice e delicata con funghi champignon freschi",
-                                ingredients: "Pomodoro, mozzarella, funghi champignon"
-                            },
-                            {
-                                name: "Nduja",
-                                price: 6.00,
-                                description: "Pizza dal sapore intenso con l'autentica nduja calabrese piccante",
-                                ingredients: "Pomodoro, mozzarella, nduja calabrese"
-                            },
-                            {
-                                name: "Carciofina",
-                                price: 6.00,
-                                description: "Pizza mediterranea con teneri carciofi che donano freschezza",
-                                ingredients: "Pomodoro, mozzarella, carciofi"
-                            },
-                            {
-                                name: "Cotto",
-                                price: 6.00,
-                                description: "Pizza tradizionale con prosciutto cotto di alta qualità",
-                                ingredients: "Pomodoro, mozzarella, prosciutto cotto"
-                            },
-                            {
-                                name: "Francese",
-                                price: 6.00,
-                                description: "Pizza raffinata con cremoso formaggio alle erbe aromatiche",
-                                ingredients: "Pomodoro, mozzarella, formaggio alle erbe"
-                            },
-                            {
-                                name: "Romana",
-                                price: 6.00,
-                                description: "Pizza dal gusto mediterraneo con acciughe salate e capperi profumati",
-                                ingredients: "Pomodoro, mozzarella, acciughe, capperi"
-                            },
-                            {
-                                name: "Gorgonzola",
-                                price: 6.00,
-                                description: "Pizza dal sapore intenso con cremoso gorgonzola DOP",
-                                ingredients: "Pomodoro, mozzarella, gorgonzola"
-                            },
-                            {
-                                name: "Patatina",
-                                price: 6.00,
-                                description: "Pizza originale e croccante con patate fritte dorate",
-                                ingredients: "Pomodoro, mozzarella, patate fritte"
-                            },
-                            {
-                                name: "Olive Nere",
-                                price: 6.00,
-                                description: "Pizza mediterranea con olive nere denocciolate dal sapore intenso",
-                                ingredients: "Pomodoro, mozzarella, olive nere (denocciolate)"
-                            },
-                            {
-                                name: "Zucchinella",
-                                price: 6.00,
-                                description: "Pizza leggera con zucchine fresche e croccante pangrattato tarallo",
-                                ingredients: "Pomodoro, mozzarella, zucchine, pangrattato tarallo"
-                            },
-                            {
-                                name: "Peperoni",
-                                price: 6.00,
-                                description: "Pizza colorata con peperoni dolci e pangrattato tarallo croccante",
-                                ingredients: "Pomodoro, mozzarella, peperoni, pangrattato tarallo"
-                            },
-                            {
-                                name: "Melanzane",
-                                price: 6.00,
-                                description: "Pizza mediterranea con melanzane saporite e pangrattato tarallo",
-                                ingredients: "Pomodoro, mozzarella, melanzane, pangrattato tarallo"
-                            },
-                            {
-                                name: "Friarielli",
-                                price: 6.00,
-                                description: "Pizza con friarielli saltati e tarallo sbriciolato",
-                                ingredients: "Pomodoro, mozzarella, friarielli, tarallo"
-                            },
-                            {
-                                name: "Ciliegina (PICCANTE)",
-                                price: 6.00,
-                                description: "Pizza piccante con pomodorini ciliegino dal sapore vivace e speziato",
-                                ingredients: "Pomodoro, mozzarella, pomodorini ciliegino piccanti"
-                            }
-                        ]
-                    },
-                    {
-                        title: "Pizze Speciali",
-                        icon: "pizza",
-                        items: [
-                            {
-                                name: "Crudaiola",
-                                price: 6.50,
-                                description: "Pizza fresca con pomodorini, rucola e scaglie di ricotta marzotica",
-                                ingredients: "Pomodoro, mozzarella, pomodorini, rucola, scaglie di ricotta marzotica"
-                            },
-                            {
-                                name: "Quattro Stagioni",
-                                price: 6.50,
-                                description: "Pizza tradizionale divisa in quattro con prosciutto, funghi, carciofi e olive",
-                                ingredients: "Pomodoro, mozzarella, prosciutto cotto, funghi, carciofi, olive"
-                            },
-                            {
-                                name: "Capricciosa",
-                                price: 6.50,
-                                description: "Pizza ricca e completa con tutti gli ingredienti della tradizione",
-                                ingredients: "Pomodoro, mozzarella, prosciutto cotto, funghi, carciofi, olive"
-                            },
-                            {
-                                name: "Americana",
-                                price: 6.50,
-                                description: "Pizza dal gusto deciso con wurstel e patatine fritte croccanti",
-                                ingredients: "Pomodoro, mozzarella, wurstel, patatine fritte"
-                            },
-                            {
-                                name: "Norcina",
-                                price: 6.50,
-                                description: "Pizza con salsiccia di Norcia. Gusto autentico e irresistibile!",
-                                ingredients: "Pomodoro, mozzarella, salsiccia di Norcia"
-                            },
-                            {
-                                name: "Tonno e Cipolla",
-                                price: 6.50,
-                                description: "Pizza marina con tonno di qualità e cipolla fresca",
-                                ingredients: "Pomodoro, mozzarella, tonno, cipolla"
-                            },
-                            {
-                                name: "Ortolana",
-                                price: 6.50,
-                                description: "Pizza vegetariana con un mix di verdure fresche di stagione",
-                                ingredients: "Pomodoro, mozzarella, zucchine, melanzane, peperoni e pangrattato"
-                            },
-                            {
-                                name: "Limoncello",
-                                price: 6.50,
-                                description: "Pizza bianca con prosciutto cotto, insalata e succo di limone aggiunto dopo la cottura",
-                                ingredients: "Base bianca, mozzarella, prosciutto cotto, insalata, succo di limone"
-                            },
-                            {
-                                name: "Norcia e Rape",
-                                price: 6.50,
-                                description: "Pizza rustica con salsiccia di Norcia e cime di rapa barese saporita",
-                                ingredients: "Pomodoro, mozzarella, salsiccia di Norcia, cime di rapa"
-                            },
-                            {
-                                name: "Sannicandrese",
-                                price: 7.00,
-                                description: "Pizza tipica con rape, olive nere denocciolate e ciliegino piccante",
-                                ingredients: "Pomodoro, mozzarella, rape, olive nere (denocciolate), ciliegino piccante"
-                            },
-                            {
-                                name: "Crudo e Bufala",
-                                price: 8.00,
-                                description: "Pizza gourmet con mozzarella di bufala e prosciutto crudo aggiunto dopo cottura",
-                                ingredients: "Pomodoro, mozzarella di bufala, prosciutto crudo (aggiunto dopo cottura), basilico"
-                            },
-                            {
-                                name: "Saporita",
-                                price: 7.00,
-                                description: "Pizza dal sapore intenso con mix di ingredienti mediterranei",
-                                ingredients: "Pomodoro, mozzarella, cipolla, peperoni, tonno, acciughe"
-                            },
-                            {
-                                name: "Bresaola Completa",
-                                price: 7.00,
-                                description: "Pizza raffinata con bresaola, grana, rucola fresca e una spruzzata di limone",
-                                ingredients: "Pomodoro, mozzarella, bresaola (aggiunta dopo cottura), grana, rucola, limone"
-                            },
-                            {
-                                name: "Euro Ciccio",
-                                price: 7.00,
-                                description: "Pizza speciale simbolo di Euro Pizza, con bordo alto e ingredienti di qualità",
-                                ingredients: "BORDO ALTO, mozzarella di bufala, pomodorini ciliegino, basilico"
-                            },
-                            {
-                                name: "Carbonara",
-                                price: 7.00,
-                                description: "Ispirata al celebre piatto romano, regina della tradizione, la Carbonara",
-                                ingredients: "Pomodoro, mozzarella, pancetta, uovo, pepe, scamorza affumicata"
-                            },
-                            {
-                                name: "Bolognese",
-                                price: 7.00,
-                                description: "Pizza gourmet con mortadella, stracciatella e una spolverata di pistacchio",
-                                ingredients: "Pomodoro, mozzarella, mortadella, stracciatella, pistacchio"
-                            },
-                            {
-                                name: "Norvegese",
-                                price: 7.00,
-                                description: "Pizza bianca con salmone e ingredienti freschi",
-                                ingredients: "Base bianca, mozzarella, philadelphia, salmone, zucchine, tarallo"
-                            },
-                            {
-                                name: "Frutti di Mare",
-                                price: 7.00,
-                                description: "Pizza marina con frutti di mare",
-                                ingredients: "Pomodoro, mozzarella, frutti di mare, ciliegino, tarallo"
-                            },
-                            {
-                                name: "Alto Adige",
-                                price: 7.00,
-                                description: "Pizza con speck e formaggio alle erbe",
-                                ingredients: "Pomodoro, mozzarella, speck (aggiunto dopo cottura), formaggio alle erbe, rucola"
-                            },
-                            {
-                                name: "Principessa",
-                                price: 8.00,
-                                description: "Pizza regale con prosciutto crudo e stracciatella",
-                                ingredients: "Pomodoro, mozzarella, prosciutto crudo (aggiunto dopo cottura), panna, stracciatella"
-                            },
-                            {
-                                name: "Gamberina",
-                                price: 8.00,
-                                description: "Pizza gourmet con gamberi",
-                                ingredients: "Base bianca, mozzarella, gamberi sgusciati, tarallo"
-                            },
-                            {
-                                name: "Murgiana",
-                                price: 8.00,
-                                description: "Pizza primaverile dal gusto intenso con base alla crema di zucca",
-                                ingredients: "Base bianca, mozzarella, crema di zucca, bacon, funghi cardoncelli, olive nere (denocciolate)"
-                            }
-                        ]
-                    },
-                    {
-                        title: "Pizze Giganti",
-                        icon: "pizza",
-                        items: [
-                            {
-                                name: "Gigante Margherita",
-                                price: 10.00,
-                                description: "La classica Margherita in formato gigante",
-                                ingredients: "Pomodoro, mozzarella, olio EVO"
-                            },
-                            {
-                                name: "Gigante Farcita",
-                                price: 13.00,
-                                description: "Pizza gigante con ingredienti a tua scelta",
-                                ingredients: "Ingredienti personalizzabili con supplemento"
-                            }
-                        ]
-                    }
-                ]
-            },
-            sfizi: {
-                categories: [
-                    {
-                        title: "Arancini",
-                        icon: "fried",
-                        items: [
-                            {
-                                name: "Arancino al Ragù",
-                                price: 2.50,
-                                description: "Croccante fuori e morbido dentro, il nostro arancino siciliano con ragù di carne succulenta e filante mozzarella",
-                                ingredients: "Riso, ragù di carne, mozzarella, pangrattato",
-                                sizes: ["1 pezzo"]
-                            },
-                            {
-                                name: "Arancino Bianco",
-                                price: 2.50,
-                                description: "Una delizia cremosa con prosciutto cotto, mozzarella filante e besciamella, dorato alla perfezione",
-                                ingredients: "Riso, prosciutto cotto, mozzarella, besciamella, pangrattato",
-                                sizes: ["1 pezzo"]
-                            },
-                            {
-                                name: "Mini arancini al ragù",
-                                price: 3.00,
-                                description: "Mini arancini artigianali al ragù, dorati e croccanti, ideali come antipasto o snack",
-                                ingredients: "Riso, ragù di carne, piselli, formaggio, pangrattato",
-                                sizes: ["5 pezzi"]
-                            }
-                        ]
-                    },
-                    {
-                        title: "Fritti",
-                        icon: "fried",
-                        items: [
-                            {
-                                name: "Panzerotto",
-                                price: 1.50,
-                                description: "Il classico panzerotto barese, croccante fuori e morbido dentro, con pomodoro fresco e mozzarella filante",
-                                ingredients: "Pomodoro, mozzarella",
-                                sizes: ["1 pezzo"]
-                            },
-                            {
-                                name: "Panzerottini",
-                                price: 3.00,
-                                description: "Piccole bontà fritte, perfette per stuzzicare l'appetito. Croccanti fuori e morbidissimi dentro",
-                                ingredients: "Pomodoro, mozzarella",
-                                sizes: ["5 pezzi"]
-                            },
-                            {
-                                name: "Scagliozze",
-                                price: 3.00,
-                                description: "Le tipiche fette di polenta fritta, croccanti fuori e morbide dentro, un must della tradizione pugliese",
-                                ingredients: "Polenta, olio per friggere, sale",
-                                sizes: ["5 pezzi"]
-                            },
-                            {
-                                name: "Anelli di Cipolla",
-                                price: 3.00,
-                                description: "Cipolle dolci tagliate ad anelli e impanate con una croccante panatura dorata",
-                                ingredients: "Cipolle, farina, uova, pangrattato",
-                                sizes: ["5 pezzi"]
-                            },
-                            {
-                                name: "Crocchè di Patate",
-                                price: 3.00,
-                                description: "Soffici all'interno e croccanti fuori, i nostri crocchè sono preparati con patate fresche",
-                                ingredients: "Patate, uova, pangrattato, spezie",
-                                sizes: ["5 pezzi"]
-                            },
-                            {
-                                name: "Birbe di Pollo",
-                                price: 3.00,
-                                description: "Bocconcini di pollo tenerissimo con doppia panatura croccante, irresistibili con il loro cuore succoso",
-                                ingredients: "Pollo, farina, uova, pangrattato, spezie",
-                                sizes: ["5 pezzi"]
-                            },
-                            {
-                                name: "Chele di Granchio",
-                                price: 3.00,
-                                description: "Crocchette dal sapore di mare, con un delicato gusto di granchio e una panatura dorata e fragrante",
-                                ingredients: "Surimi, pangrattato, spezie",
-                                sizes: ["5 pezzi"]
-                            },
-                            {
-                                name: "Patatine Fritte",
-                                price: 3.50,
-                                description: "Patate fritte al momento, croccanti fuori e morbide dentro, leggermente salate. In omaggio 2 salse a scelta",
-                                ingredients: "Patate selezionate, sale marino, olio di semi di girasole per friggere",
-                                sizes: ["Porzione media"]
-                            },
-                            {
-                                name: "Patatine Spirali",
-                                price: 4.00,
-                                description: "Patate tagliate a spirale, croccanti e saporite, con una spolverata di paprica. Con 2 salse in omaggio",
-                                ingredients: "Patate selezionate, sale marino, paprica, olio di semi di girasole per friggere",
-                                sizes: ["Porzione media"]
-                            },
-                            {
-                                name: "Cartone di Patatine",
-                                price: 7.00,
-                                description: "Un'intera montagna di patatine croccanti, dorate alla perfezione e irresistibilmente fragranti. Include 4 salse in omaggio",
-                                ingredients: "Patate selezionate, sale marino, olio di semi di girasole per friggere",
-                                sizes: ["Box grande"]
-                            }
-                        ]
-                    }
-                ]
-            },
-            dolci: {
-                categories: [
-                    {
-                        title: "Dolci",
-                        icon: "dessert",
-                        items: [
-                            {
-                                name: "Pizza alla Nutella",
-                                price: 6.50,
-                                description: "Pizza dolce con impasto fragrante ricoperta di crema alla nocciola Nutella e una spolverata di zucchero a velo",
-                                ingredients: "Impasto pizza dolce, Nutella, zucchero a velo"
-                            }
-                        ]
-                    }
-                ]
-            },
-            bevande: {
-                categories: [
-                    {
-                        title: "Bibite",
-                        icon: "drink",
-                        items: [
-                            {
-                                name: "Coca Cola",
-                                price: 1.50,
-                                description: "La classica bevanda gassata dal gusto inconfondibile, perfetta per accompagnare pizza e fritti",
-                                ingredients: "",
-                                sizes: ["Lattina 33cl"]
-                            },
-                            {
-                                name: "Coca Cola Zero",
-                                price: 1.50,
-                                description: "Tutto il gusto della Coca Cola originale senza zuccheri, per chi preferisce una versione leggera",
-                                ingredients: "",
-                                sizes: ["Lattina 33cl"]
-                            },
-                            {
-                                name: "Fanta",
-                                price: 1.50,
-                                description: "Bevanda gassata all'arancia, fresca e dissetante, dal sapore fruttato e vivace",
-                                ingredients: "",
-                                sizes: ["Lattina 33cl"]
-                            },
-                            {
-                                name: "Chinotto",
-                                price: 1.50,
-                                description: "Bevanda italiana dal gusto amarognolo e aromatico, perfetta per chi ama i sapori intensi",
-                                ingredients: "",
-                                sizes: ["Lattina 33cl"]
-                            },
-                            {
-                                name: "Acqua Naturale",
-                                price: 1.00,
-                                description: "Acqua minerale fresca, leggera e purificante, ideale per dissetarsi",
-                                ingredients: "",
-                                sizes: ["Bottiglia 50cl"]
-                            },
-                            {
-                                name: "Acqua Frizzante",
-                                price: 1.00,
-                                description: "Acqua minerale con bollicine fresche e leggere, ottima per digerire",
-                                ingredients: "",
-                                sizes: ["Bottiglia 50cl"]
-                            }
-                        ]
-                    },
-                    {
-                        title: "Birre",
-                        icon: "beer",
-                        items: [
-                            {
-                                name: "Nastro Azzurro",
-                                price: 1.50,
-                                description: "Birra premium italiana dal gusto equilibrato e leggero, con un retrogusto leggermente amarognolo",
-                                ingredients: "",
-                                sizes: ["Bottiglia 33cl"]
-                            },
-                            {
-                                name: "Ichnusa",
-                                price: 1.50,
-                                description: "Birra lager sarda, fresca e dissetante, con un gusto pulito e una lieve nota di malto",
-                                ingredients: "",
-                                sizes: ["Bottiglia 33cl"]
-                            },
-                            {
-                                name: "Birra al Limone",
-                                price: 1.50,
-                                description: "Birra rinfrescante con una delicata nota di limone, perfetta per l'estate",
-                                ingredients: "",
-                                sizes: ["Bottiglia 33cl"]
-                            },
-                            {
-                                name: "Peroni Grande",
-                                price: 3.00,
-                                description: "La classica Peroni in formato grande, dal gusto pieno e maltato, con un finale leggermente amarognolo",
-                                ingredients: "",
-                                sizes: ["Bottiglia 66cl"]
-                            },
-                            {
-                                name: "Corona",
-                                price: 3.00,
-                                description: "Birra messicana leggera e rinfrescante, da gustare con una spruzzata di lime per un'esperienza autentica",
-                                ingredients: "",
-                                sizes: ["Bottiglia 33cl"]
-                            },
-                            {
-                                name: "Tennents",
-                                price: 3.00,
-                                description: "Birra scozzese dal gusto pulito e fresco, prodotta con orzo locale e acqua purissima",
-                                ingredients: "",
-                                sizes: ["Bottiglia 33cl"]
-                            },
-                            {
-                                name: "Messina",
-                                price: 3.00,
-                                description: "Birra siciliana dorata e corposa, con una delicata nota salina che la rende unica",
-                                ingredients: "",
-                                sizes: ["Bottiglia 50cl"]
-                            }
-                        ]
-                    }
-                ]
-            }
-        };
+const MENU = {};                 // riempito dal fetch, contenuto non fidato per il rendering
+let cart = [];                   // {id, name, price, qty, note}
+let pendingEdit = null;
 
-        // Cart functionality
-        let cart = [];
-        let orderType = 'delivery'; // Default to delivery
+const fmt = n => "€" + Number(n).toFixed(2);
+const $ = s => document.querySelector(s);
 
-        // Function to generate menu items
-        function generateMenuItems() {
-            for (const section in menuData) {
-                const sectionElement = document.getElementById(section);
+/* Crea un elemento con testo sicuro (mai innerHTML su dati esterni) */
+function el(tag, cls, text){
+  const e = document.createElement(tag);
+  if(cls) e.className = cls;
+  if(text != null) e.textContent = text;     // textContent neutralizza qualsiasi HTML/script
+  return e;
+}
 
-                // Add intro if exists
-                if (menuData[section].intro) {
-                    sectionElement.innerHTML = menuData[section].intro;
-                }
+/* Normalizza un prezzo proveniente dal JSON in numero valido >= 0 */
+function safePrice(v){
+  const n = Number(v);
+  return (Number.isFinite(n) && n >= 0) ? n : 0;
+}
 
-                // Generate categories
-                menuData[section].categories.forEach(category => {
-                    const categoryHTML = `
-                        <div class="category">
-                            <h2 class="category-title ${category.icon}-icon">${category.title}</h2>
-                            ${category.items.map(item => `
-                                <div class="menu-item" data-name="${item.name}" data-price="${item.price}">
-                                    <div class="item-header">
-                                        <div class="item-name">${item.name}</div>
-                                        <div class="item-price">€${item.price.toFixed(2)}</div>
-                                    </div>
-                                    <div class="item-description">${item.description}</div>
-                                    <div class="item-ingredients">${item.ingredients}</div>
-                                    ${item.sizes ? `
-                                        <div class="size-options">
-                                            ${item.sizes.map(size => `<span class="size-option">${size}</span>`).join('')}
-                                        </div>
-                                    ` : ''}
-                                    <br><br><button class="add-to-cart-btn" onclick="addToCart('${item.name}', ${item.price})">Aggiungi</button>
-                                </div>
-                            `).join('')}
-                        </div>
-                    `;
+/* Carica il menu */
+fetch('menu.json')
+  .then(r => r.json())
+  .then(data => { Object.assign(MENU, data); renderMenu('pizze'); })
+  .catch(() => {
+    const m = $('#menuList');
+    m.textContent = '';
+    m.appendChild(el('p', 'empty', 'Impossibile caricare il menu. Verifica che menu.json sia nella stessa cartella.'));
+  });
 
-                    sectionElement.innerHTML += categoryHTML;
-                });
-            }
-        }
+/* Tab */
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    renderMenu(t.dataset.cat);
+    window.scrollTo({ top: 0 });
+  });
+});
 
-        // Show notification
-        function showNotification(message, isError = false) {
-            const notification = document.getElementById('notification');
+/* Le sole pizze hanno il tasto Modifica */
+const EDITABLE = new Set(['pizze']);
 
-            // Se l'elemento non esiste, esci dalla funzione
-            if (!notification) {
-                console.error("Elemento di notifica non trovato nel DOM");
-                return;
-            }
+function renderMenu(cat){
+  const node = MENU[cat] || {};
+  const list = $('#menuList');
+  list.textContent = '';                       // svuota in modo sicuro
 
-            notification.textContent = message;
+  if(node.intro){
+    list.appendChild(el('div', 'intro', String(node.intro)));
+  }
 
-            if (isError) {
-                notification.classList.add('error');
-            } else {
-                notification.classList.remove('error');
-            }
+  const categories = Array.isArray(node.categories) ? node.categories : [];
+  categories.forEach(group => {
+    list.appendChild(el('div', 'section-title', String(group.title || '')));
+    const items = Array.isArray(group.items) ? group.items : [];
+    items.forEach(it => {
+      const name = String(it.nome || '');
+      const price = safePrice(it.prezzo);
 
-            notification.classList.add('show');
+      const card = el('div', 'card');
+      const info = el('div', 'info');
+      info.appendChild(el('div', 'name', name));
+      if(it.descrizione) info.appendChild(el('div', 'desc', String(it.descrizione)));
+      info.appendChild(el('div', 'price', fmt(price)));
 
-            const modal = document.getElementById('customerInfoModal');
-            if (modal && modal.classList.contains('open')) {
-                notification.style.top = '80px';
-            } else {
-                notification.style.top = '20px';
-            }
+      const actions = el('div', 'actions');
+      const add = el('button', 'btn-add', 'Aggiungi');
+      add.addEventListener('click', () => addItem(name, price));
+      actions.appendChild(add);
 
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
+      if(EDITABLE.has(cat)){
+        const edit = el('button', 'btn-edit', '✎ Modifica');
+        edit.addEventListener('click', () => openEdit(name, price));
+        actions.appendChild(edit);
+      }
 
-        // Cart functions
-        function addToCart(name, price) {
-            const existingItem = cart.find(item => item.name === name);
+      card.appendChild(info);
+      card.appendChild(actions);
+      list.appendChild(card);
+    });
+  });
+}
 
-            if (existingItem) {
-                existingItem.quantity += 1;
-                showNotification(`"${name}" aggiunto al carrello (${existingItem.quantity}x)`);
-            } else {
-                cart.push({
-                    name: name,
-                    price: price,
-                    quantity: 1
-                });
-                showNotification(`"${name}" aggiunto al carrello`);
-            }
+/* Aggiunge un prodotto semplice (accorpa se senza note) */
+function addItem(name, price){
+  const existing = cart.find(c => c.name === name && c.price === price && !c.note);
+  if(existing){ existing.qty++; }
+  else { cart.push({ name, price, qty: 1, note: '' }); }
+  updateCart(); bump();
+}
 
-            updateCart(); // Assicurati che questa riga sia presente
-            showCartNotification();
-        }
+/* Modale modifica */
+function openEdit(name, price){
+  pendingEdit = { name, price };
+  $('#editTitle').textContent = name;          // textContent: niente injection dal nome
+  $('#editNote').value = '';
+  openOverlay('editOverlay');
+  setTimeout(() => $('#editNote').focus(), 200);
+}
+$('#editConfirm').addEventListener('click', () => {
+  if(!pendingEdit) return;
+  const note = $('#editNote').value.trim().slice(0, 300);   // limite lunghezza
+  cart.push({ name: pendingEdit.name, price: pendingEdit.price, qty: 1, note });
+  pendingEdit = null;
+  closeOverlay('editOverlay');
+  updateCart(); bump();
+});
+$('#editCancel').addEventListener('click', () => { pendingEdit = null; closeOverlay('editOverlay'); });
 
-        function removeFromCart(index) {
-            const removedItem = cart[index];
-            cart.splice(index, 1);
-            updateCart();
-            showNotification(`"${removedItem.name}" rimosso dal carrello`);
-        }
+/* Logica carrello */
+function subtotal(){ return cart.reduce((s, c) => s + c.price * c.qty, 0); }
+function totalQty(){ return cart.reduce((s, c) => s + c.qty, 0); }
 
-        function updateCartItemQuantity(index, newQuantity) {
-            if (newQuantity > 0) {
-                cart[index].quantity = newQuantity;
-                showNotification(`Quantità di "${cart[index].name}" aggiornata a ${newQuantity}`);
-            } else {
-                const removedItem = cart[index];
-                cart.splice(index, 1);
-                showNotification(`"${removedItem.name}" rimosso dal carrello`);
-            }
-            updateCart();
-        }
+function updateCart(){
+  const q = totalQty();
+  $('#cartCount').textContent = q;
+  $('#cartTotalMini').textContent = fmt(subtotal() + (q > 0 ? CONFIG.DELIVERY_FEE : 0));
+  $('#cartBar').classList.toggle('hidden', q === 0);
+  renderCartItems();
+}
 
-        function clearCart() {
-            cart = [];
-            updateCart();
-            showNotification("Carrello svuotato");
-        }
+function renderCartItems(){
+  const box = $('#cartItems');
+  box.textContent = '';
+  const totals = $('#cartTotals');
+  totals.textContent = '';
 
-        function updateCart() {
-            const cartItemsElement = document.querySelector('.cart-items');
-            const cartCountElement = document.querySelector('.cart-count');
-            const totalAmountElement = document.querySelector('.total-amount');
+  if(cart.length === 0){
+    box.appendChild(el('div', 'empty', 'Il carrello è vuoto'));
+    $('#goCheckout').style.display = 'none';
+    return;
+  }
+  $('#goCheckout').style.display = '';
 
-            // Update cart items
-            cartItemsElement.innerHTML = '';
+  cart.forEach((c, i) => {
+    const item = el('div', 'citem');
+    const info = el('div', 'ci-info');
+    info.appendChild(el('div', 'ci-name', c.name));
+    if(c.note) info.appendChild(el('div', 'ci-note', '✎ ' + c.note));
+    info.appendChild(el('div', 'ci-price', fmt(c.price * c.qty)));
 
-            if (cart.length === 0) {
-                cartItemsElement.innerHTML = '<p>Il carrello è vuoto</p>';
-            } else {
-                cart.forEach((item, index) => {
-                    const itemElement = document.createElement('div');
-                    itemElement.className = 'cart-item';
-                    itemElement.innerHTML = `
-                <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">€${item.price.toFixed(2)}</div>
-                <div class="cart-item-quantity">
-                    <button class="quantity-btn" onclick="updateCartItemQuantity(${index}, ${item.quantity - 1})">-</button>
-                    <span class="quantity-value">${item.quantity}</span>
-                    <button class="quantity-btn" onclick="updateCartItemQuantity(${index}, ${item.quantity + 1})">+</button>
-                </div>
-                <div class="remove-item" onclick="removeFromCart(${index})">✕</div>
-            `;
-                    cartItemsElement.appendChild(itemElement);
-                });
-            }
+    const qty = el('div', 'qty');
+    const minus = el('button', null, '−');
+    minus.addEventListener('click', () => chQty(i, -1));
+    const span = el('span', null, String(c.qty));
+    const plus = el('button', null, '+');
+    plus.addEventListener('click', () => chQty(i, 1));
+    qty.appendChild(minus); qty.appendChild(span); qty.appendChild(plus);
 
-            // Update cart count
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartCountElement.textContent = totalItems;
+    item.appendChild(info);
+    item.appendChild(qty);
+    box.appendChild(item);
+  });
 
-            // Update total amount
-            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            totalAmountElement.textContent = totalAmount.toFixed(2);
+  const sub = subtotal();
+  const rows = [
+    ['Subtotale', fmt(sub)],
+    ['Spedizione', fmt(CONFIG.DELIVERY_FEE)]
+  ];
+  rows.forEach(([k, v]) => {
+    const r = el('div', 'row');
+    r.appendChild(el('span', null, k));
+    r.appendChild(el('span', null, v));
+    totals.appendChild(r);
+  });
+  const grand = el('div', 'grand');
+  grand.appendChild(el('span', null, 'Totale indicativo'));
+  grand.appendChild(el('span', null, fmt(sub + CONFIG.DELIVERY_FEE)));
+  totals.appendChild(grand);
+  totals.appendChild(el('div', 'note-disc',
+    'Il totale è indicativo: eventuali modifiche o aggiunte verranno conteggiate dalla pizzeria al momento della conferma.'));
+}
 
-            // Save cart to localStorage
-            localStorage.setItem('cart', JSON.stringify(cart));
-        }
+function chQty(i, d){
+  cart[i].qty += d;
+  if(cart[i].qty <= 0) cart.splice(i, 1);
+  updateCart();
+}
 
-        function showCartNotification() {
-            const cartBtn = document.querySelector('.cart-btn');
-            cartBtn.classList.add('pulse');
+function bump(){
+  const bar = $('#cartBar');
+  bar.style.transform = 'scale(1.03)';
+  setTimeout(() => bar.style.transform = '', 150);
+}
 
-            setTimeout(() => {
-                cartBtn.classList.remove('pulse');
-            }, 500);
-        }
+/* Overlay */
+function openOverlay(id){ $('#' + id).classList.add('open'); }
+function closeOverlay(id){ $('#' + id).classList.remove('open'); }
+$('#cartBar').addEventListener('click', () => openOverlay('cartOverlay'));
+document.querySelectorAll('[data-close]').forEach(b =>
+  b.addEventListener('click', () => closeOverlay(b.dataset.close)));
+document.querySelectorAll('.overlay').forEach(o =>
+  o.addEventListener('click', e => { if(e.target === o) o.classList.remove('open'); }));
+$('#goCheckout').addEventListener('click', () => { closeOverlay('cartOverlay'); openOverlay('checkoutOverlay'); });
 
-        function toggleCart() {
-            const cartPanel = document.querySelector('.cart-panel');
-            const overlay = document.querySelector('.overlay');
-            const nav = document.querySelector('.nav');
+/* Validazione input: niente caratteri di controllo, lunghezza limitata */
+function cleanField(v, max){
+  return String(v).replace(/[\u0000-\u001F\u007F]/g, '').trim().slice(0, max);
+}
 
-            cartPanel.classList.toggle('open');
-            overlay.classList.toggle('active');
+/* Invio WhatsApp */
+$('#sendWhatsapp').addEventListener('click', () => {
+  const name = cleanField($('#fName').value, 60);
+  const surname = cleanField($('#fSurname').value, 60);
+  const addr = cleanField($('#fAddr').value, 120);
 
-            if (cartPanel.classList.contains('open')) {
-                nav.classList.add('hidden');
-            } else {
-                nav.classList.remove('hidden');
-            }
-        }
+  if(!name || !surname || !addr){ alert('Compila nome, cognome e indirizzo.'); return; }
+  if(CONFIG.WHATSAPP_NUMBER.includes('X')){
+    alert('Il numero WhatsApp non è ancora stato configurato nel file index.html (CONFIG.WHATSAPP_NUMBER).');
+    return;
+  }
+  // Il numero deve contenere solo cifre: previene URL malformati o manomissioni
+  if(!/^\d{8,15}$/.test(CONFIG.WHATSAPP_NUMBER)){
+    alert('Il numero WhatsApp configurato non è valido.');
+    return;
+  }
 
-        function showOrderTypeModal() {
-            if (cart.length === 0) {
-                showNotification('Il carrello è vuoto!', true);
-                return;
-            }
-            document.getElementById('orderTypeModal').classList.add('open');
-        }
+  const lines = [];
+  lines.push('*NUOVO ORDINE — Euro Pizza & Sfizi*');
+  lines.push('');
+  lines.push('*Cliente:* ' + name + ' ' + surname);
+  lines.push('*Indirizzo:* ' + addr);
+  lines.push('');
+  lines.push('*Ordine:*');
+  cart.forEach(c => {
+    let line = '• ' + c.qty + 'x ' + c.name;
+    if(c.note) line += '  _(' + c.note + ')_';
+    lines.push(line);
+  });
+  lines.push('');
+  lines.push('_Totale indicativo: ' + fmt(subtotal() + CONFIG.DELIVERY_FEE) + ' (spedizione inclusa)_');
 
-        function closeOrderTypeModal() {
-            document.getElementById('orderTypeModal').classList.remove('open');
-        }
+  const url = 'https://wa.me/' + CONFIG.WHATSAPP_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
+  window.open(url, '_blank', 'noopener,noreferrer');
 
-        function selectOrderType(type) {
-            orderType = type;
+  closeOverlay('checkoutOverlay');
+  openOverlay('successOverlay');
+});
 
-            // Update UI
-            document.querySelectorAll('.order-type-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
+$('#successDone').addEventListener('click', () => {
+  closeOverlay('successOverlay');
+  cart = [];
+  updateCart();
+});
 
-            if (type === 'delivery') {
-                document.querySelector('.order-type-btn.delivery').classList.add('active');
-                document.getElementById('deliveryFields').style.display = 'block';
-                document.getElementById('pickupFields').style.display = 'none';
-            } else {
-                document.querySelector('.order-type-btn.pickup').classList.add('active');
-                document.getElementById('deliveryFields').style.display = 'none';
-                document.getElementById('pickupFields').style.display = 'block';
-            }
-        }
-
-        function showTimeErrorModal() {
-            document.getElementById('timeErrorModal').classList.add('open');
-        }
-
-        function closeTimeErrorModal() {
-            document.getElementById('timeErrorModal').classList.remove('open');
-        }
-
-        function sendOrder() {
-            let name, time;
-
-            if (orderType === 'delivery') {
-                name = document.getElementById('customerName').value;
-                const address = document.getElementById('customerAddress').value;
-                const number = document.getElementById('customerNumber').value;
-                time = document.getElementById('deliveryTime').value;
-
-                if (!name || !address || !number || !time) {
-                    showNotification('Compila tutti i campi obbligatori', true);
-                    return;
-                }
-            } else {
-                name = document.getElementById('pickupName').value;
-                time = document.getElementById('pickupTime').value;
-
-                if (!name || !time) {
-                    showNotification('Compila tutti i campi obbligatori', true);
-                    return;
-                }
-            }
-
-            // Validazione orario
-            const timeParts = time.split(':');
-            const hours = parseInt(timeParts[0]);
-            const minutes = parseInt(timeParts[1]) || 0;
-
-            // Verifica che l'orario sia tra le 19:00 e le 23:00
-            if (hours < 19 || hours >= 23) {
-                showTimeErrorModal();
-                return;
-            }
-
-            const phoneNumber = "3342900638";
-            const orderText = generateOrderText(name, time);
-            const encodedText = encodeURIComponent(orderText);
-
-            window.open(`https://wa.me/${phoneNumber}?text=${encodedText}`, '_blank');
-            closeOrderTypeModal();
-        }
-
-        function generateOrderText(name, time) {
-            let text = "Ciao Euro Pizza & Sfizi, vorrei ordinare:\n\n";
-
-            cart.forEach(item => {
-                text += `- ${item.name} (${item.quantity}x) - €${(item.price * item.quantity).toFixed(2)}\n`;
-            });
-
-            text += `\nInformazioni:\n`;
-            text += `- Nome: ${name}\n`;
-
-            if (orderType === 'delivery') {
-                const address = document.getElementById('customerAddress').value;
-                const number = document.getElementById('customerNumber').value;
-                text += `- Indirizzo: ${address}, ${number}\n`;
-                text += `- Orario consegna: ${time}\n`;
-                text += `- Tipo: Consegna a domicilio\n`;
-            } else {
-                text += `- Orario ritiro: ${time}\n`;
-                text += `- Tipo: Ritiro al banco\n`;
-            }
-
-            text += "\nÈ possibile ordinare?\n";
-            text += "Grazie!";
-
-            return text;
-        }
-
-        // Initialize the menu and cart
-        document.addEventListener('DOMContentLoaded', function () {
-            generateMenuItems();
-
-            // Load cart from localStorage if exists
-            const savedCart = localStorage.getItem('cart');
-            if (savedCart) {
-                cart = JSON.parse(savedCart);
-                updateCart();
-            }
-        });
-
-        function showSection(sectionId) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-
-            // Remove active class from all buttons
-            const buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // Show the selected section
-            document.getElementById(sectionId).classList.add('active');
-
-            // Add active class to the corresponding button
-            event.target.classList.add('active');
-        }
-
-        // Smooth scroll for better user experience
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.addEventListener('click', function () {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
+updateCart();
+</script>
 </body>
-
 </html>

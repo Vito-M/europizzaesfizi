@@ -1,102 +1,38 @@
-# 🍕 Euro Pizza & Sfizi - Menu Online
+# Euro Pizza & Sfizi — Ordini Online
 
-Un menu digitale moderno e interattivo per **Euro Pizza & Sfizi**, con sistema di ordinazione integrato via WhatsApp.
+Interfaccia web mobile-first per la pizzeria Euro Pizza & Sfizi. Permette ai
+clienti di sfogliare il menu, comporre il carrello e inviare l'ordine
+direttamente su WhatsApp.
 
----
+## Funzionalità
 
-## ✨ Caratteristiche Principali
+- Menu suddiviso in quattro categorie: Pizze, Sfizi, Dolci e Bevande.
+- Tasto Aggiungi su ogni prodotto e, per le sole pizze, tasto Modifica per
+  inserire richieste particolari.
+- Carrello con quantità modificabili e totale indicativo comprensivo del costo
+  di spedizione. Il totale definitivo viene calcolato dalla pizzeria, poiché le
+  modifiche possono variare il prezzo.
+- Checkout con nome, cognome e indirizzo e informativa GDPR: i dati inseriti non
+  vengono salvati né su server né sul sito, restano solo sul dispositivo
+  dell'utente e servono unicamente a comporre il messaggio WhatsApp.
+- Invio dell'ordine tramite WhatsApp con messaggio già formattato.
+- Modale di conferma che avvisa l'utente che l'ordine è stato inviato ma è in
+  attesa di conferma da parte della pizzeria.
 
-### 🛒 **Ordinazione Online Semplificata**
-- **Ordina direttamente dal web** - Seleziona i tuoi piatti preferiti con un semplice click
-- **Calcolo automatico del totale** - Vedi subito il prezzo del tuo ordine
-- **Invio automatico su WhatsApp** - Il tuo ordine viene inviato automaticamente al numero della pizzeria
-- **Scegli la modalità** - Disponibile sia per **consegna a domicilio** che **asporto**
+## Tecnologie utilizzate
 
-### 📱 **Esperienza Utente Ottimale**
-- Design responsive ottimizzato per smartphone e desktop
-- Navigazione fluida e intuitiva
-- Caricamento veloce e prestazioni elevate
-- Interface moderna e accattivante
-
----
-
-## 🌐 Accesso al Menu
-
-**Visita il menu online:** [https://vito-m.github.io/europizzaesfizi/](https://vito-m.github.io/europizzaesfizi/)
-
-## 📋 Sezioni del Menu
-
-- **🍕 Pizze** - Selezione di pizze tradizionali e gourmet con ingredienti freschi
-- **🍤 Sfizi** - Antipasti, fritti e specialità della casa
-- **🍰 Dolci** - Dessert artigianali per concludere in dolcezza
-- **🥤 Bevande** - Bibite, birre e bevande per accompagnare ogni piatto
-
----
-
-## 🚀 Come Ordinare
-
-1. **Naviga il menu** online al link sopra indicato
-2. **Seleziona i prodotti** che desideri ordinare
-3. **Scegli la modalità**: 
-   - 🏠 **Consegna a domicilio**
-   - 🏃 **Ritiro in pizzeria (asporto)**
-4. **Clicca "Ordina"** - Il tuo ordine verrà automaticamente inviato tramite WhatsApp al numero della pizzeria
-5. **Attendi la conferma** - La pizzeria ti contatterà per confermare l'ordine e i dettagli
+- HTML5 per la struttura della pagina.
+- CSS3 per lo stile e il layout responsive mobile-first, senza framework esterni.
+- JavaScript (Vanilla, ES6) per la logica di menu, carrello e composizione del
+  messaggio. Il rendering dei contenuti avviene esclusivamente tramite
+  textContent e createElement, per prevenire attacchi di tipo XSS.
+- JSON per il menu, esterno al codice (menu.json), così da modificare prodotti e
+  prezzi senza intervenire sull'HTML.
+- Content Security Policy e validazione degli input come misure di sicurezza
+  aggiuntive.
+- Google Fonts per la tipografia.
+- API WhatsApp Click-to-Chat (wa.me) per l'invio dell'ordine.
 
 ---
 
-## 📞 Contatti
-
-**Euro Pizza & Sfizi**
-- 📞 **Telefono:** 080 993 4688
-- 📱 **WhatsApp:** 334 290 0638
-
----
-
-## 🛠️ Tecnologie Utilizzate
-
-- **Frontend:** HTML5, CSS3, JavaScript ES6+
-- **API:** WhatsApp Business API per ordinazioni
-- **Hosting:** GitHub Pages
-- **Design:** Mobile-first responsive design
-
-## 📁 Struttura del Progetto
-
-```
-├── index.html          # Pagina principale del menu
-├── README.md           # Documentazione del progetto
-└── img/               # Immagini e risorse grafiche
-```
-
-## 🔧 Funzionalità Avanzate
-
-- **Sistema di ordinazione integrato** con selezione prodotti e calcolo totale
-- **Integrazione WhatsApp API** per invio automatico degli ordini
-- **Gestione modalità consegna** (domicilio/asporto)
-- **Ottimizzazione mobile** per una perfetta esperienza su smartphone
-- **Menu dinamico** con prezzi sempre aggiornati
-
----
-
-## 📝 Note
-
-- Il menu viene aggiornato regolarmente
-- I prezzi mostrati sono sempre aggiornati
-- Per informazioni sulla disponibilità stagionale, contattare direttamente la pizzeria
-- Il sistema di ordinazione è attivo 24/7
-
----
-
-## 👨‍💻 Sviluppatore
-
-**Vito Marchionna**  
-Studente presso **Università degli Studi di Bari Aldo Moro**  
-Corso di Laurea: **ITPS**  
-Anno Accademico: **2025**
-
-### Competenze Tecniche
-- HTML5 & CSS3
-- JavaScript ES6+
-- API Integration (WhatsApp)
-- Responsive Web Design
-- GitHub Pages Deployment
+Sito creato da Vito Marchionna.

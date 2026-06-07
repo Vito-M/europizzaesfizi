@@ -1,0 +1,136 @@
+{
+  "pizze": {
+    "intro": "Le nostre pizze sono preparate con cura e lievitate per 48 ore. Alcune richieste comportano un supplemento: Mozzarella di Bufala DOP +1,50 € | Mozzarella senza lattosio +1,50 € | Impasto con bordo alto (stile napoletano) +1,50 € | Impasto ai cereali +1,00 € | Impasto senza glutine +2,50 €",
+    "categories": [
+      {
+        "title": "Pizze Base",
+        "items": [
+          { "nome": "Ciccio", "prezzo": 4.00, "descrizione": "Impasto pizza, olio EVO, sale, origano" },
+          { "nome": "Ciccio Rosso", "prezzo": 4.50, "descrizione": "Pomodoro, olio EVO, origano" },
+          { "nome": "Marinara", "prezzo": 4.50, "descrizione": "Pomodoro, aglio, origano, olio EVO" },
+          { "nome": "Margherita", "prezzo": 5.00, "descrizione": "Pomodoro, mozzarella, olio EVO" },
+          { "nome": "Panzerotto al forno (grande)", "prezzo": 5.00, "descrizione": "Pomodoro, mozzarella, basilico fresco, olio EVO, con patatine fritte" }
+        ]
+      },
+      {
+        "title": "Pizze Classiche",
+        "items": [
+          { "nome": "Wurstel", "prezzo": 6.00, "descrizione": "Pomodoro, mozzarella, wurstel" },
+          { "nome": "Diavola", "prezzo": 6.00, "descrizione": "Pomodoro, mozzarella, salame piccante" },
+          { "nome": "Champignon", "prezzo": 6.00, "descrizione": "Pomodoro, mozzarella, funghi champignon" },
+          { "nome": "Nduja", "prezzo": 6.00, "descrizione": "Pomodoro, mozzarella, nduja calabrese" },
+          { "nome": "Carciofina", "prezzo": 6.00, "descrizione": "Pomodoro, mozzarella, carciofi" },
+          { "nome": "Cotto", "prezzo": 6.00, "descrizione": "Pomodoro, mozzarella, prosciutto cotto" },
+          { "nome": "Francese", "prezzo": 6.00, "descrizione": "Pomodoro, mozzarella, formaggio alle erbe" },
+          { "nome": "Romana", "prezzo": 6.00, "descrizione": "Pomodoro, mozzarella, acciughe, capperi" },
+          { "nome": "Gorgonzola", "prezzo": 6.00, "descrizione": "Pomodoro, mozzarella, gorgonzola" },
+          { "nome": "Patatina", "prezzo": 6.00, "descrizione": "Pomodoro, mozzarella, patate fritte" },
+          { "nome": "Olive Nere", "prezzo": 6.00, "descrizione": "Pomodoro, mozzarella, olive nere denocciolate" },
+          { "nome": "Zucchinella", "prezzo": 6.00, "descrizione": "Pomodoro, mozzarella, zucchine, pangrattato tarallo" },
+          { "nome": "Peperoni", "prezzo": 6.00, "descrizione": "Pomodoro, mozzarella, peperoni, pangrattato tarallo" },
+          { "nome": "Melanzane", "prezzo": 6.00, "descrizione": "Pomodoro, mozzarella, melanzane, pangrattato tarallo" },
+          { "nome": "Friarielli", "prezzo": 6.00, "descrizione": "Pomodoro, mozzarella, friarielli, tarallo" },
+          { "nome": "Ciliegina (piccante)", "prezzo": 6.00, "descrizione": "Pomodoro, mozzarella, pomodorini ciliegino piccanti" }
+        ]
+      },
+      {
+        "title": "Pizze Speciali",
+        "items": [
+          { "nome": "Crudaiola", "prezzo": 6.50, "descrizione": "Pomodoro, mozzarella, pomodorini, rucola, scaglie di ricotta marzotica" },
+          { "nome": "Quattro Stagioni", "prezzo": 6.50, "descrizione": "Pomodoro, mozzarella, prosciutto cotto, funghi, carciofi, olive" },
+          { "nome": "Capricciosa", "prezzo": 6.50, "descrizione": "Pomodoro, mozzarella, prosciutto cotto, funghi, carciofi, olive" },
+          { "nome": "Americana", "prezzo": 6.50, "descrizione": "Pomodoro, mozzarella, wurstel, patatine fritte" },
+          { "nome": "Norcina", "prezzo": 6.50, "descrizione": "Pomodoro, mozzarella, salsiccia di Norcia" },
+          { "nome": "Tonno e Cipolla", "prezzo": 6.50, "descrizione": "Pomodoro, mozzarella, tonno, cipolla" },
+          { "nome": "Ortolana", "prezzo": 6.50, "descrizione": "Pomodoro, mozzarella, zucchine, melanzane, peperoni e pangrattato" },
+          { "nome": "Limoncello", "prezzo": 6.50, "descrizione": "Base bianca, mozzarella, prosciutto cotto, insalata, succo di limone" },
+          { "nome": "Norcia e Rape", "prezzo": 6.50, "descrizione": "Pomodoro, mozzarella, salsiccia di Norcia, cime di rapa" },
+          { "nome": "Sannicandrese", "prezzo": 7.00, "descrizione": "Pomodoro, mozzarella, rape, olive nere denocciolate, ciliegino piccante" },
+          { "nome": "Crudo e Bufala", "prezzo": 8.00, "descrizione": "Pomodoro, mozzarella di bufala, prosciutto crudo (dopo cottura), basilico" },
+          { "nome": "Saporita", "prezzo": 7.00, "descrizione": "Pomodoro, mozzarella, cipolla, peperoni, tonno, acciughe" },
+          { "nome": "Bresaola Completa", "prezzo": 7.00, "descrizione": "Pomodoro, mozzarella, bresaola (dopo cottura), grana, rucola, limone" },
+          { "nome": "Euro Ciccio", "prezzo": 7.00, "descrizione": "Bordo alto, mozzarella di bufala, pomodorini ciliegino, basilico" },
+          { "nome": "Carbonara", "prezzo": 7.00, "descrizione": "Pomodoro, mozzarella, pancetta, uovo, pepe, scamorza affumicata" },
+          { "nome": "Bolognese", "prezzo": 7.00, "descrizione": "Pomodoro, mozzarella, mortadella, stracciatella, pistacchio" },
+          { "nome": "Norvegese", "prezzo": 7.00, "descrizione": "Base bianca, mozzarella, philadelphia, salmone, zucchine, tarallo" },
+          { "nome": "Frutti di Mare", "prezzo": 7.00, "descrizione": "Pomodoro, mozzarella, frutti di mare, ciliegino, tarallo" },
+          { "nome": "Alto Adige", "prezzo": 7.00, "descrizione": "Pomodoro, mozzarella, speck (dopo cottura), formaggio alle erbe, rucola" },
+          { "nome": "Principessa", "prezzo": 8.00, "descrizione": "Pomodoro, mozzarella, prosciutto crudo (dopo cottura), panna, stracciatella" },
+          { "nome": "Gamberina", "prezzo": 8.00, "descrizione": "Base bianca, mozzarella, gamberi sgusciati, tarallo" },
+          { "nome": "Murgiana", "prezzo": 8.00, "descrizione": "Base bianca, mozzarella, crema di zucca, bacon, funghi cardoncelli, olive nere denocciolate" }
+        ]
+      },
+      {
+        "title": "Pizze Giganti",
+        "items": [
+          { "nome": "Gigante Margherita", "prezzo": 10.00, "descrizione": "Pomodoro, mozzarella, olio EVO" },
+          { "nome": "Gigante Farcita", "prezzo": 13.00, "descrizione": "Ingredienti personalizzabili con supplemento" }
+        ]
+      }
+    ]
+  },
+  "sfizi": {
+    "categories": [
+      {
+        "title": "Arancini",
+        "items": [
+          { "nome": "Arancino al Ragù", "prezzo": 2.50, "descrizione": "Riso, ragù di carne, mozzarella, pangrattato (1 pezzo)" },
+          { "nome": "Arancino Bianco", "prezzo": 2.50, "descrizione": "Riso, prosciutto cotto, mozzarella, besciamella, pangrattato (1 pezzo)" },
+          { "nome": "Mini arancini al ragù", "prezzo": 3.00, "descrizione": "Riso, ragù di carne, piselli, formaggio, pangrattato (5 pezzi)" }
+        ]
+      },
+      {
+        "title": "Fritti",
+        "items": [
+          { "nome": "Panzerotto", "prezzo": 1.50, "descrizione": "Pomodoro, mozzarella (1 pezzo)" },
+          { "nome": "Panzerottini", "prezzo": 3.00, "descrizione": "Pomodoro, mozzarella (5 pezzi)" },
+          { "nome": "Scagliozze", "prezzo": 3.00, "descrizione": "Polenta fritta, sale (5 pezzi)" },
+          { "nome": "Anelli di Cipolla", "prezzo": 3.00, "descrizione": "Cipolle, farina, uova, pangrattato (5 pezzi)" },
+          { "nome": "Crocchè di Patate", "prezzo": 3.00, "descrizione": "Patate, uova, pangrattato, spezie (5 pezzi)" },
+          { "nome": "Birbe di Pollo", "prezzo": 3.00, "descrizione": "Pollo, farina, uova, pangrattato, spezie (5 pezzi)" },
+          { "nome": "Chele di Granchio", "prezzo": 3.00, "descrizione": "Surimi, pangrattato, spezie (5 pezzi)" },
+          { "nome": "Patatine Fritte", "prezzo": 3.50, "descrizione": "Patate, sale marino. In omaggio 2 salse a scelta (porzione media)" },
+          { "nome": "Patatine Spirali", "prezzo": 4.00, "descrizione": "Patate, sale, paprica. Con 2 salse in omaggio (porzione media)" },
+          { "nome": "Cartone di Patatine", "prezzo": 7.00, "descrizione": "Patate, sale marino. Include 4 salse in omaggio (box grande)" }
+        ]
+      }
+    ]
+  },
+  "dolci": {
+    "categories": [
+      {
+        "title": "Dolci",
+        "items": [
+          { "nome": "Pizza alla Nutella", "prezzo": 6.50, "descrizione": "Impasto pizza dolce, Nutella, zucchero a velo" }
+        ]
+      }
+    ]
+  },
+  "bevande": {
+    "categories": [
+      {
+        "title": "Bibite",
+        "items": [
+          { "nome": "Coca Cola", "prezzo": 1.50, "descrizione": "Lattina 33cl" },
+          { "nome": "Coca Cola Zero", "prezzo": 1.50, "descrizione": "Lattina 33cl" },
+          { "nome": "Fanta", "prezzo": 1.50, "descrizione": "Lattina 33cl" },
+          { "nome": "Chinotto", "prezzo": 1.50, "descrizione": "Lattina 33cl" },
+          { "nome": "Acqua Naturale", "prezzo": 1.00, "descrizione": "Bottiglia 50cl" },
+          { "nome": "Acqua Frizzante", "prezzo": 1.00, "descrizione": "Bottiglia 50cl" }
+        ]
+      },
+      {
+        "title": "Birre",
+        "items": [
+          { "nome": "Nastro Azzurro", "prezzo": 1.50, "descrizione": "Bottiglia 33cl" },
+          { "nome": "Ichnusa", "prezzo": 1.50, "descrizione": "Bottiglia 33cl" },
+          { "nome": "Birra al Limone", "prezzo": 1.50, "descrizione": "Bottiglia 33cl" },
+          { "nome": "Peroni Grande", "prezzo": 3.00, "descrizione": "Bottiglia 66cl" },
+          { "nome": "Corona", "prezzo": 3.00, "descrizione": "Bottiglia 33cl" },
+          { "nome": "Tennents", "prezzo": 3.00, "descrizione": "Bottiglia 33cl" },
+          { "nome": "Messina", "prezzo": 3.00, "descrizione": "Bottiglia 50cl" }
+        ]
+      }
+    ]
+  }
+}
