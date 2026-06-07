@@ -33,6 +33,28 @@ direttamente su WhatsApp.
 - Google Fonts per la tipografia.
 - API WhatsApp Click-to-Chat (wa.me) per l'invio dell'ordine.
 
+## Configurazione
+
+I parametri principali si trovano in cima allo `<script>` del file `index.html`,
+nell'oggetto `CONFIG`.
+
+- `WHATSAPP_NUMBER`: il numero su cui arrivano gli ordini, con prefisso
+  internazionale e senza segni o spazi. Attualmente impostato su `393342900638`.
+- `DELIVERY_FEE`: il costo di spedizione aggiunto al totale indicativo.
+- `CLOSED_DAYS`: i giorni di chiusura settimanale. I numeri vanno da 0 a 6, dove
+  0 è Domenica, 1 Lunedì, 2 Martedì e così via. Attualmente è `[2]`, quindi ogni
+  martedì il sito mostra in alto l'avviso che la pizzeria è chiusa. Per cambiare
+  giorno basta sostituire il numero; per più giorni si elencano separati da
+  virgola, ad esempio `[1, 2]`.
+- `OPEN_EXCEPTIONS`: elenco di date specifiche in cui la pizzeria è aperta anche
+  se cade in un giorno di chiusura. Le date vanno nel formato `"AAAA-MM-GG"`, ad
+  esempio `["2026-06-16"]` per restare aperti quel martedì.
+- `CLOSED_EXCEPTIONS`: elenco di date in cui la pizzeria è chiusa anche se non è
+  un giorno di chiusura abituale, utile per le festività.
+
+Quando il giorno risulta di chiusura, in cima alla pagina compare un avviso e, al
+momento dell'invio dell'ordine, viene chiesta una conferma aggiuntiva.
+
 ---
 
 Sito creato da Vito Marchionna.

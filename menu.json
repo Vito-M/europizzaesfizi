@@ -1,6 +1,12 @@
 {
   "pizze": {
-    "intro": "Le nostre pizze sono preparate con cura e lievitate per 48 ore. Alcune richieste comportano un supplemento: Mozzarella di Bufala DOP +1,50 € | Mozzarella senza lattosio +1,50 € | Impasto con bordo alto (stile napoletano) +1,50 € | Impasto ai cereali +1,00 € | Impasto senza glutine +2,50 €",
+    "supplementi": [
+      { "nome": "Mozzarella di Bufala DOP", "prezzo": 1.50 },
+      { "nome": "Mozzarella senza lattosio", "prezzo": 1.50 },
+      { "nome": "Bordo alto (stile napoletano)", "prezzo": 1.50 },
+      { "nome": "Impasto ai cereali", "prezzo": 1.00 },
+      { "nome": "Impasto senza glutine", "prezzo": 2.50 }
+    ],
     "categories": [
       {
         "title": "Pizze Base",

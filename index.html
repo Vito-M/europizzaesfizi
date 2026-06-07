@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Euro Pizza &amp; Sfizi — Ordina</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍕</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -51,6 +52,14 @@ header h1{
 header h1 .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);display:inline-block}
 header p{margin:2px 0 0;color:var(--muted);font-size:13px}
 
+/* Banner pizzeria chiusa */
+.closed-banner{
+  background:#fff7ed;border-bottom:1px solid #fed7aa;color:#9a3412;
+  padding:12px 18px;font-size:13.5px;font-weight:600;line-height:1.45;
+  display:flex;align-items:center;gap:9px;
+}
+.closed-banner::before{content:"●";color:var(--accent);font-size:11px}
+
 /* Tabs */
 .tabs{
   display:flex;gap:6px;position:sticky;top:78px;z-index:25;
@@ -60,31 +69,46 @@ header p{margin:2px 0 0;color:var(--muted);font-size:13px}
 .tab{
   flex:1;border:none;background:transparent;color:var(--muted);
   font-family:var(--font-body);font-weight:600;font-size:13px;
-  padding:10px 2px;border-radius:10px;cursor:pointer;transition:.2s;
+  padding:11px 4px;border-radius:10px;cursor:pointer;transition:.2s;letter-spacing:-.01em;
 }
-.tab.active{background:var(--ink);color:#fff}
-.intro{
-  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
-  padding:14px 16px;margin:0 4px 16px;font-size:12.5px;color:var(--muted);line-height:1.5;
+.tab.active{background:var(--ink);color:#fff;box-shadow:0 4px 12px rgba(26,22,20,.18)}
+.supp-list{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px}
+.supp-chip{
+  border:1px solid var(--line);background:var(--surface);color:var(--ink);
+  border-radius:20px;padding:8px 13px;font-size:13px;font-weight:600;cursor:pointer;
+  transition:.15s;display:flex;align-items:center;gap:6px;
 }
+.supp-chip .pp{color:var(--muted);font-weight:600;font-size:12px}
+.supp-chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.supp-chip.on .pp{color:rgba(255,255,255,.85)}
+.supp-chip.on::before{content:"✓";font-size:12px}
 
 /* List */
 main{padding:18px 14px 0}
 .section-title{
-  font-family:var(--font-display);font-size:15px;font-weight:600;
-  color:var(--muted);text-transform:uppercase;letter-spacing:.08em;
-  margin:6px 4px 12px;
+  position:sticky;top:128px;z-index:20;
+  font-family:var(--font-display);font-size:14px;font-weight:600;
+  color:var(--muted);text-transform:uppercase;letter-spacing:.1em;
+  margin:0 0 12px;padding:8px 4px;
+  background:linear-gradient(to bottom, var(--bg) 75%, rgba(250,248,245,0));
+  display:flex;align-items:center;gap:8px;
 }
+.section-title::before{content:"";width:18px;height:2px;background:var(--accent);border-radius:2px}
+.section-title + .card{margin-top:0}
 .card{
   background:var(--surface);border:1px solid var(--line);
   border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;
   display:flex;gap:12px;align-items:flex-start;box-shadow:var(--shadow);
+  transition:transform .15s, box-shadow .15s, border-color .15s;
+  animation:cardIn .35s ease backwards;
 }
+@keyframes cardIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card:active{transform:scale(.992)}
 .card .info{flex:1;min-width:0}
-.card .name{font-weight:700;font-size:15.5px}
-.card .desc{color:var(--muted);font-size:13px;margin-top:2px}
-.card .price{font-family:var(--font-display);font-weight:600;font-size:15px;margin-top:6px}
-.card .actions{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.card .name{font-weight:700;font-size:15.5px;letter-spacing:-.01em}
+.card .desc{color:var(--muted);font-size:13px;margin-top:3px;line-height:1.4}
+.card .price{font-family:var(--font-display);font-weight:600;font-size:16px;margin-top:7px;color:var(--accent)}
+.card .actions{display:flex;flex-direction:column;gap:6px;align-items:flex-end;flex-shrink:0}
 .btn-add{
   border:none;background:var(--accent);color:#fff;font-weight:700;font-size:13px;
   padding:8px 14px;border-radius:10px;cursor:pointer;transition:.15s;white-space:nowrap;
@@ -101,6 +125,7 @@ main{padding:18px 14px 0}
 .cartbar{
   position:fixed;bottom:0;left:0;right:0;z-index:40;
   max-width:520px;margin:0 auto;padding:12px 14px 18px;
+  padding-bottom:max(18px, env(safe-area-inset-bottom));
   background:linear-gradient(to top, var(--bg) 70%, transparent);
 }
 .cartbar-inner{
@@ -111,10 +136,22 @@ main{padding:18px 14px 0}
 .cartbar-inner.hidden{display:none}
 .cartbar .count{
   background:var(--accent);font-weight:700;font-size:13px;
-  padding:3px 9px;border-radius:20px;margin-right:10px;
+  padding:3px 9px;border-radius:20px;margin-right:10px;transition:transform .2s;
 }
+.cartbar .count.pulse{animation:countPulse .35s ease}
+@keyframes countPulse{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
 .cartbar .total{font-family:var(--font-display);font-weight:600;font-size:18px}
 .cartbar .go{font-weight:700;font-size:14px;opacity:.9}
+
+/* Toast conferma */
+.toast{
+  position:fixed;left:50%;bottom:104px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:#fff;padding:11px 18px;border-radius:24px;
+  font-size:13.5px;font-weight:600;z-index:45;opacity:0;pointer-events:none;
+  transition:opacity .25s, transform .25s;box-shadow:0 8px 24px rgba(26,22,20,.3);
+  max-width:90%;text-align:center;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* Sheets / modals */
 .overlay{
@@ -144,9 +181,15 @@ main{padding:18px 14px 0}
 .citem .ci-note{color:var(--accent-dark);font-size:12.5px;margin-top:3px;font-style:italic}
 .citem .ci-price{font-family:var(--font-display);font-weight:600;margin-top:4px}
 .qty{display:flex;align-items:center;gap:10px}
-.qty button{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-size:16px;font-weight:700;cursor:pointer;color:var(--ink)}
+.qty button{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-size:17px;font-weight:700;cursor:pointer;color:var(--ink);transition:.12s}
+.qty button:active{background:var(--accent);color:#fff;border-color:var(--accent)}
 .qty span{min-width:18px;text-align:center;font-weight:700}
-.empty{text-align:center;color:var(--muted);padding:40px 0}
+.empty{text-align:center;color:var(--muted);padding:44px 0;font-size:14.5px}
+
+/* Accessibilità: anello di focus visibile solo da tastiera */
+button:focus-visible, input:focus-visible, textarea:focus-visible{
+  outline:2px solid var(--accent);outline-offset:2px;
+}
 
 .totals{margin-top:14px;padding-top:14px;border-top:2px solid var(--ink)}
 .totals .row{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:6px}
@@ -203,6 +246,15 @@ textarea{resize:vertical;min-height:70px}
   background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;
   border-radius:12px;padding:12px;font-size:13px;margin-top:14px;line-height:1.5;
 }
+
+/* Rispetta la preferenza di sistema per ridurre il movimento */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -211,6 +263,8 @@ textarea{resize:vertical;min-height:70px}
     <h1><span class="dot"></span>Euro Pizza &amp; Sfizi</h1>
     <p>Ordina online — ritiro o consegna a domicilio</p>
   </header>
+
+  <div class="closed-banner" id="closedBanner" hidden></div>
 
   <div class="tabs" id="tabs">
     <button class="tab active" data-cat="pizze">Pizze</button>
@@ -233,12 +287,15 @@ textarea{resize:vertical;min-height:70px}
   </div>
 </div>
 
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <!-- Edit modal -->
 <div class="overlay modal-center" id="editOverlay">
   <div class="modal-box">
     <h3 id="editTitle">Modifica</h3>
-    <p class="sub">Scrivi qui eventuali richieste particolari (es. senza basilico, ben cotta, aggiungi funghi…)</p>
-    <textarea id="editNote" placeholder="Le tue modifiche..."></textarea>
+    <p class="sub">Aggiungi un supplemento o scrivi una richiesta particolare.</p>
+    <div id="editSupp" class="supp-list"></div>
+    <textarea id="editNote" placeholder="Altre richieste (es. ben cotta, poco sale)..."></textarea>
     <button class="btn-primary" style="background:var(--accent)" id="editConfirm">Aggiungi al carrello</button>
     <button class="btn-ghost" id="editCancel">Annulla</button>
   </div>
@@ -316,8 +373,14 @@ textarea{resize:vertical;min-height:70px}
    Esempio per l'Italia: 393331234567
    Il valore è bloccato (Object.freeze) e non può essere modificato a runtime. */
 const CONFIG = Object.freeze({
-  WHATSAPP_NUMBER: "39XXXXXXXXXX",
-  DELIVERY_FEE: 1.00
+  WHATSAPP_NUMBER: "393342900638",
+  DELIVERY_FEE: 1.00,
+  // Giorni di chiusura settimanale: 0=Domenica, 1=Lunedì, 2=Martedì, 3=Mercoledì, 4=Giovedì, 5=Venerdì, 6=Sabato
+  CLOSED_DAYS: [2],
+  // Eccezioni: date (formato "AAAA-MM-GG") in cui la pizzeria è APERTA anche se cade in un giorno di chiusura
+  OPEN_EXCEPTIONS: [],
+  // Eccezioni: date (formato "AAAA-MM-GG") in cui la pizzeria è CHIUSA anche se non è un giorno di chiusura abituale (es. festività)
+  CLOSED_EXCEPTIONS: []
 });
 /* ==================================================================== */
 
@@ -341,6 +404,31 @@ function safePrice(v){
   const n = Number(v);
   return (Number.isFinite(n) && n >= 0) ? n : 0;
 }
+
+/* ---- Gestione giorni di chiusura ---- */
+// Restituisce la data odierna come "AAAA-MM-GG" in orario locale
+function todayISO(){
+  const d = new Date();
+  const p = n => String(n).padStart(2, '0');
+  return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+}
+
+// Decide se oggi la pizzeria è chiusa, tenendo conto delle eccezioni
+function isClosedToday(){
+  const iso = todayISO();
+  if(CONFIG.OPEN_EXCEPTIONS.includes(iso)) return false;     // aperto per eccezione
+  if(CONFIG.CLOSED_EXCEPTIONS.includes(iso)) return true;    // chiuso per eccezione (es. festività)
+  return CONFIG.CLOSED_DAYS.includes(new Date().getDay());   // chiusura settimanale abituale
+}
+
+function applyClosedState(){
+  if(isClosedToday()){
+    const banner = $('#closedBanner');
+    banner.textContent = 'Oggi la pizzeria è chiusa. Puoi comunque sfogliare il menu; gli ordini ripartono alla prossima apertura.';
+    banner.hidden = false;
+  }
+}
+applyClosedState();
 
 /* Carica il menu */
 fetch('menu.json')
@@ -370,11 +458,8 @@ function renderMenu(cat){
   const list = $('#menuList');
   list.textContent = '';                       // svuota in modo sicuro
 
-  if(node.intro){
-    list.appendChild(el('div', 'intro', String(node.intro)));
-  }
-
   const categories = Array.isArray(node.categories) ? node.categories : [];
+  let idx = 0;
   categories.forEach(group => {
     list.appendChild(el('div', 'section-title', String(group.title || '')));
     const items = Array.isArray(group.items) ? group.items : [];
@@ -383,6 +468,9 @@ function renderMenu(cat){
       const price = safePrice(it.prezzo);
 
       const card = el('div', 'card');
+      // ritardo d'ingresso scaglionato, limitato così le liste lunghe non "aspettano"
+      card.style.animationDelay = Math.min(idx, 12) * 0.03 + 's';
+      idx++;
       const info = el('div', 'info');
       info.appendChild(el('div', 'name', name));
       if(it.descrizione) info.appendChild(el('div', 'desc', String(it.descrizione)));
@@ -412,25 +500,62 @@ function addItem(name, price){
   if(existing){ existing.qty++; }
   else { cart.push({ name, price, qty: 1, note: '' }); }
   updateCart(); bump();
+  showToast(name + ' aggiunto');
 }
 
 /* Modale modifica */
+let editSupps = [];                              // supplementi selezionati nella sessione del modale
+
 function openEdit(name, price){
   pendingEdit = { name, price };
-  $('#editTitle').textContent = name;          // textContent: niente injection dal nome
+  editSupps = [];
+  $('#editTitle').textContent = name;            // textContent: niente injection dal nome
   $('#editNote').value = '';
+
+  // Costruisce i chip dei supplementi (solo per le pizze)
+  const box = $('#editSupp');
+  box.textContent = '';
+  const supps = Array.isArray((MENU.pizze || {}).supplementi) ? MENU.pizze.supplementi : [];
+  supps.forEach(s => {
+    const sName = String(s.nome || '');
+    const sPrice = safePrice(s.prezzo);
+    const chip = el('button', 'supp-chip');
+    chip.appendChild(el('span', null, sName));
+    chip.appendChild(el('span', 'pp', '+' + fmt(sPrice)));
+    chip.addEventListener('click', () => {
+      const i = editSupps.findIndex(x => x.nome === sName);
+      if(i >= 0){ editSupps.splice(i, 1); chip.classList.remove('on'); }
+      else { editSupps.push({ nome: sName, prezzo: sPrice }); chip.classList.add('on'); }
+    });
+    box.appendChild(chip);
+  });
+
   openOverlay('editOverlay');
   setTimeout(() => $('#editNote').focus(), 200);
 }
+
 $('#editConfirm').addEventListener('click', () => {
   if(!pendingEdit) return;
-  const note = $('#editNote').value.trim().slice(0, 300);   // limite lunghezza
-  cart.push({ name: pendingEdit.name, price: pendingEdit.price, qty: 1, note });
+  const note = $('#editNote').value.trim().slice(0, 300);
+  const suppTotal = editSupps.reduce((s, x) => s + x.prezzo, 0);
+  // Etichetta dei supplementi da mostrare nel carrello e nel messaggio
+  const suppLabel = editSupps.map(x => x.nome).join(', ');
+  let fullNote = suppLabel;
+  if(note) fullNote = suppLabel ? (suppLabel + ' — ' + note) : note;
+
+  cart.push({
+    name: pendingEdit.name,
+    price: pendingEdit.price + suppTotal,        // prezzo comprensivo dei supplementi
+    qty: 1,
+    note: fullNote
+  });
   pendingEdit = null;
+  editSupps = [];
   closeOverlay('editOverlay');
   updateCart(); bump();
+  showToast('Aggiunto al carrello');
 });
-$('#editCancel').addEventListener('click', () => { pendingEdit = null; closeOverlay('editOverlay'); });
+$('#editCancel').addEventListener('click', () => { pendingEdit = null; editSupps = []; closeOverlay('editOverlay'); });
 
 /* Logica carrello */
 function subtotal(){ return cart.reduce((s, c) => s + c.price * c.qty, 0); }
@@ -506,6 +631,19 @@ function bump(){
   const bar = $('#cartBar');
   bar.style.transform = 'scale(1.03)';
   setTimeout(() => bar.style.transform = '', 150);
+  const count = $('#cartCount');
+  count.classList.remove('pulse');
+  void count.offsetWidth;            // forza il reflow per riavviare l'animazione
+  count.classList.add('pulse');
+}
+
+let toastTimer = null;
+function showToast(text){
+  const t = $('#toast');
+  t.textContent = text;              // textContent: sicuro contro XSS
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 1600);
 }
 
 /* Overlay */
@@ -538,6 +676,11 @@ $('#sendWhatsapp').addEventListener('click', () => {
   if(!/^\d{8,15}$/.test(CONFIG.WHATSAPP_NUMBER)){
     alert('Il numero WhatsApp configurato non è valido.');
     return;
+  }
+  // Se oggi è giorno di chiusura, chiede conferma prima di inviare
+  if(isClosedToday()){
+    const proceed = confirm('Oggi la pizzeria è chiusa. L\'ordine potrebbe non essere preso in carico fino alla prossima apertura. Vuoi inviarlo comunque?');
+    if(!proceed) return;
   }
 
   const lines = [];
