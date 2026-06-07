@@ -51,9 +51,17 @@ nell'oggetto `CONFIG`.
   esempio `["2026-06-16"]` per restare aperti quel martedì.
 - `CLOSED_EXCEPTIONS`: elenco di date in cui la pizzeria è chiusa anche se non è
   un giorno di chiusura abituale, utile per le festività.
+- `ORDER_FROM` e `ORDER_TO`: la fascia oraria (formato 24 ore `"HH:MM"`) entro
+  cui è possibile ordinare. Attualmente dalle `09:00` alle `22:30`. Fuori da
+  questa fascia compare un modale che avvisa che la pizzeria è chiusa. Questa
+  fascia determina anche gli orari selezionabili per la consegna.
+- `OPEN_FROM` e `OPEN_TO`: gli orari di apertura mostrati all'utente nel modale
+  di chiusura. Attualmente dalle `19:00` alle `23:00`.
 
-Quando il giorno risulta di chiusura, in cima alla pagina compare un avviso e, al
-momento dell'invio dell'ordine, viene chiesta una conferma aggiuntiva.
+All'apertura del sito, se il giorno è di chiusura o l'ora è fuori dalla fascia di
+ordinazione, compare un modale informativo. Il menu resta comunque sfogliabile.
+Nella schermata dei dati il cliente seleziona inoltre un orario di consegna, che
+viene incluso nel messaggio WhatsApp inviato alla pizzeria.
 
 ---
 

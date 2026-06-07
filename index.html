@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Euro Pizza &amp; Sfizi — Ordina</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍕</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +25,7 @@
   --font-body:'Manrope',-apple-system,sans-serif;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;padding:0}
+html,body{margin:0;padding:0;touch-action:manipulation}
 body{
   font-family:var(--font-body);
   background:var(--bg);
@@ -51,14 +51,6 @@ header h1{
 }
 header h1 .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);display:inline-block}
 header p{margin:2px 0 0;color:var(--muted);font-size:13px}
-
-/* Banner pizzeria chiusa */
-.closed-banner{
-  background:#fff7ed;border-bottom:1px solid #fed7aa;color:#9a3412;
-  padding:12px 18px;font-size:13.5px;font-weight:600;line-height:1.45;
-  display:flex;align-items:center;gap:9px;
-}
-.closed-banner::before{content:"●";color:var(--accent);font-size:11px}
 
 /* Tabs */
 .tabs{
@@ -198,12 +190,15 @@ button:focus-visible, input:focus-visible, textarea:focus-visible{
 
 /* Inputs */
 label{display:block;font-weight:600;font-size:13px;margin:14px 0 5px}
-input,textarea{
+input,textarea,select{
   width:100%;border:1px solid var(--line);background:var(--surface);
   border-radius:11px;padding:12px 14px;font-family:var(--font-body);font-size:15px;color:var(--ink);
 }
-input:focus,textarea:focus{outline:none;border-color:var(--accent)}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent)}
 textarea{resize:vertical;min-height:70px}
+select{appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%237a726b' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
 
 .gdpr{
   background:#fff;border:1px dashed var(--line);border-radius:12px;
@@ -246,6 +241,11 @@ textarea{resize:vertical;min-height:70px}
   background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;
   border-radius:12px;padding:12px;font-size:13px;margin-top:14px;line-height:1.5;
 }
+.closed-ck{background:var(--accent)!important;font-size:30px}
+.hours-line{
+  background:#fff;border:1px solid var(--line);border-radius:12px;
+  padding:11px 14px;font-weight:600;color:var(--ink)!important;margin-top:6px!important;
+}
 
 /* Rispetta la preferenza di sistema per ridurre il movimento */
 @media (prefers-reduced-motion: reduce){
@@ -263,8 +263,6 @@ textarea{resize:vertical;min-height:70px}
     <h1><span class="dot"></span>Euro Pizza &amp; Sfizi</h1>
     <p>Ordina online — ritiro o consegna a domicilio</p>
   </header>
-
-  <div class="closed-banner" id="closedBanner" hidden></div>
 
   <div class="tabs" id="tabs">
     <button class="tab active" data-cat="pizze">Pizze</button>
@@ -331,6 +329,9 @@ textarea{resize:vertical;min-height:70px}
       <label for="fAddr">Via e numero civico *</label>
       <input id="fAddr" type="text" placeholder="Via Roma 12">
 
+      <label for="fTime">Orario di consegna desiderato *</label>
+      <select id="fTime"></select>
+
       <div class="gdpr">
         <b>Privacy (GDPR).</b> I dati inseriti (nome, cognome, indirizzo)
         <b>non vengono salvati né memorizzati</b> da questo sito o su alcun server.
@@ -344,6 +345,19 @@ textarea{resize:vertical;min-height:70px}
         Invia ordine su WhatsApp
       </button>
       <button class="btn-ghost" data-close="checkoutOverlay">Torna indietro</button>
+    </div>
+  </div>
+</div>
+
+<!-- Closed info modal (giorno o orario di chiusura) -->
+<div class="overlay modal-center" id="closedOverlay">
+  <div class="modal-box">
+    <div class="success-box">
+      <div class="ck closed-ck">🍕</div>
+      <h3 id="closedTitle">Siamo chiusi</h3>
+      <p id="closedMsg"></p>
+      <p id="closedHours" class="hours-line"></p>
+      <button class="btn-primary" id="closedDone">Sfoglia comunque il menu</button>
     </div>
   </div>
 </div>
@@ -380,7 +394,13 @@ const CONFIG = Object.freeze({
   // Eccezioni: date (formato "AAAA-MM-GG") in cui la pizzeria è APERTA anche se cade in un giorno di chiusura
   OPEN_EXCEPTIONS: [],
   // Eccezioni: date (formato "AAAA-MM-GG") in cui la pizzeria è CHIUSA anche se non è un giorno di chiusura abituale (es. festività)
-  CLOSED_EXCEPTIONS: []
+  CLOSED_EXCEPTIONS: [],
+  // Fascia oraria entro cui è possibile ORDINARE (formato 24h "HH:MM"). Fuori da questa fascia compare il modale.
+  ORDER_FROM: "09:00",
+  ORDER_TO: "22:30",
+  // Orari di apertura MOSTRATI nel modale all'utente
+  OPEN_FROM: "19:00",
+  OPEN_TO: "23:00"
 });
 /* ==================================================================== */
 
@@ -421,14 +441,38 @@ function isClosedToday(){
   return CONFIG.CLOSED_DAYS.includes(new Date().getDay());   // chiusura settimanale abituale
 }
 
-function applyClosedState(){
-  if(isClosedToday()){
-    const banner = $('#closedBanner');
-    banner.textContent = 'Oggi la pizzeria è chiusa. Puoi comunque sfogliare il menu; gli ordini ripartono alla prossima apertura.';
-    banner.hidden = false;
-  }
+// Converte "HH:MM" in minuti dall'inizio della giornata
+function toMinutes(hhmm){
+  const [h, m] = String(hhmm).split(':').map(Number);
+  return h * 60 + (m || 0);
 }
-applyClosedState();
+
+// Vero se l'ora attuale è fuori dalla fascia in cui si può ordinare
+function isOutsideHours(){
+  const now = new Date();
+  const cur = now.getHours() * 60 + now.getMinutes();
+  return cur < toMinutes(CONFIG.ORDER_FROM) || cur > toMinutes(CONFIG.ORDER_TO);
+}
+
+// Mostra il modale di chiusura, dando priorità al giorno di chiusura sull'orario
+function checkOpenState(){
+  const dayClosed = isClosedToday();
+  const timeClosed = isOutsideHours();
+  if(!dayClosed && !timeClosed) return;
+
+  if(dayClosed){
+    $('#closedTitle').textContent = 'Oggi siamo chiusi';
+    $('#closedMsg').textContent = 'Oggi la pizzeria è chiusa. Puoi comunque sfogliare il menu; gli ordini ripartono alla prossima apertura.';
+    $('#closedHours').textContent = '';
+    $('#closedHours').hidden = true;
+  } else {
+    $('#closedTitle').textContent = 'Siamo chiusi in questo momento';
+    $('#closedMsg').textContent = 'In questo momento siamo fuori orario. Puoi sfogliare il menu, ma gli ordini vengono presi solo durante l\'orario di apertura.';
+    $('#closedHours').textContent = 'Orario di apertura: ' + CONFIG.OPEN_FROM + ' – ' + CONFIG.OPEN_TO;
+    $('#closedHours').hidden = false;
+  }
+  openOverlay('closedOverlay');
+}
 
 /* Carica il menu */
 fetch('menu.json')
@@ -666,8 +710,10 @@ $('#sendWhatsapp').addEventListener('click', () => {
   const name = cleanField($('#fName').value, 60);
   const surname = cleanField($('#fSurname').value, 60);
   const addr = cleanField($('#fAddr').value, 120);
+  const time = $('#fTime').value;
 
   if(!name || !surname || !addr){ alert('Compila nome, cognome e indirizzo.'); return; }
+  if(!time){ alert('Seleziona un orario di consegna.'); return; }
   if(CONFIG.WHATSAPP_NUMBER.includes('X')){
     alert('Il numero WhatsApp non è ancora stato configurato nel file index.html (CONFIG.WHATSAPP_NUMBER).');
     return;
@@ -677,6 +723,8 @@ $('#sendWhatsapp').addEventListener('click', () => {
     alert('Il numero WhatsApp configurato non è valido.');
     return;
   }
+  // L'orario selezionato deve essere uno slot valido
+  if(!/^\d{2}:\d{2}$/.test(time)){ alert('Orario di consegna non valido.'); return; }
   // Se oggi è giorno di chiusura, chiede conferma prima di inviare
   if(isClosedToday()){
     const proceed = confirm('Oggi la pizzeria è chiusa. L\'ordine potrebbe non essere preso in carico fino alla prossima apertura. Vuoi inviarlo comunque?');
@@ -684,10 +732,11 @@ $('#sendWhatsapp').addEventListener('click', () => {
   }
 
   const lines = [];
-  lines.push('*NUOVO ORDINE — Euro Pizza & Sfizi*');
+  lines.push('*NUOVO ORDINE*');
   lines.push('');
   lines.push('*Cliente:* ' + name + ' ' + surname);
   lines.push('*Indirizzo:* ' + addr);
+  lines.push('*Orario di consegna:* ' + time);
   lines.push('');
   lines.push('*Ordine:*');
   cart.forEach(c => {
@@ -695,8 +744,6 @@ $('#sendWhatsapp').addEventListener('click', () => {
     if(c.note) line += '  _(' + c.note + ')_';
     lines.push(line);
   });
-  lines.push('');
-  lines.push('_Totale indicativo: ' + fmt(subtotal() + CONFIG.DELIVERY_FEE) + ' (spedizione inclusa)_');
 
   const url = 'https://wa.me/' + CONFIG.WHATSAPP_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
   window.open(url, '_blank', 'noopener,noreferrer');
@@ -710,6 +757,31 @@ $('#successDone').addEventListener('click', () => {
   cart = [];
   updateCart();
 });
+
+/* Chiusura modale info chiusura + popolamento orari + verifica all'avvio */
+$('#closedDone').addEventListener('click', () => closeOverlay('closedOverlay'));
+
+/* Popola il selettore dell'orario di consegna con slot da 15 minuti
+   entro la fascia in cui si può ordinare */
+function buildTimeOptions(){
+  const sel = $('#fTime');
+  sel.textContent = '';
+  const placeholder = el('option', null, 'Seleziona un orario');
+  placeholder.value = '';
+  sel.appendChild(placeholder);
+  const start = toMinutes(CONFIG.ORDER_FROM);
+  const end = toMinutes(CONFIG.ORDER_TO);
+  for(let m = start; m <= end; m += 15){
+    const h = String(Math.floor(m / 60)).padStart(2, '0');
+    const mm = String(m % 60).padStart(2, '0');
+    const label = h + ':' + mm;
+    const opt = el('option', null, label);
+    opt.value = label;
+    sel.appendChild(opt);
+  }
+}
+buildTimeOptions();
+checkOpenState();
 
 updateCart();
 </script>
