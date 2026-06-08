@@ -565,13 +565,26 @@ function openEdit(name, price){
   supps.forEach(s => {
     const sName = String(s.nome || '');
     const sPrice = safePrice(s.prezzo);
+    const sGroup = s.gruppo ? String(s.gruppo) : '';
     const chip = el('button', 'supp-chip');
+    if(sGroup) chip.dataset.group = sGroup;
     chip.appendChild(el('span', null, sName));
     chip.appendChild(el('span', 'pp', '+' + fmt(sPrice)));
     chip.addEventListener('click', () => {
       const i = editSupps.findIndex(x => x.nome === sName);
-      if(i >= 0){ editSupps.splice(i, 1); chip.classList.remove('on'); }
-      else { editSupps.push({ nome: sName, prezzo: sPrice }); chip.classList.add('on'); }
+      if(i >= 0){
+        // già selezionato: lo tolgo
+        editSupps.splice(i, 1);
+        chip.classList.remove('on');
+      } else {
+        // se appartiene a un gruppo, deseleziono prima gli altri dello stesso gruppo
+        if(sGroup){
+          editSupps = editSupps.filter(x => x.gruppo !== sGroup);
+          box.querySelectorAll('.supp-chip[data-group="' + CSS.escape(sGroup) + '"]').forEach(c => c.classList.remove('on'));
+        }
+        editSupps.push({ nome: sName, prezzo: sPrice, gruppo: sGroup });
+        chip.classList.add('on');
+      }
     });
     box.appendChild(chip);
   });

@@ -1,11 +1,11 @@
 {
   "pizze": {
     "supplementi": [
-      { "nome": "Mozzarella di Bufala DOP", "prezzo": 1.50 },
-      { "nome": "Mozzarella senza lattosio", "prezzo": 1.50 },
-      { "nome": "Bordo alto (stile napoletano)", "prezzo": 1.50 },
-      { "nome": "Impasto ai cereali", "prezzo": 1.00 },
-      { "nome": "Impasto senza glutine", "prezzo": 2.50 }
+      { "nome": "Mozzarella di Bufala DOP", "prezzo": 1.50, "gruppo": "mozzarella" },
+      { "nome": "Mozzarella senza lattosio", "prezzo": 1.50, "gruppo": "mozzarella" },
+      { "nome": "Bordo alto (stile napoletano)", "prezzo": 1.50, "gruppo": "impasto" },
+      { "nome": "Impasto ai cereali", "prezzo": 1.00, "gruppo": "impasto" },
+      { "nome": "Impasto senza glutine", "prezzo": 2.50, "gruppo": "impasto" }
     ],
     "categories": [
       {

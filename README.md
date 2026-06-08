@@ -66,6 +66,12 @@ ordinazione, compare un modale informativo. Il menu resta comunque sfogliabile.
 Nella schermata dei dati il cliente seleziona inoltre un orario di consegna, che
 viene incluso nel messaggio WhatsApp inviato alla pizzeria.
 
+I supplementi delle pizze si trovano in `menu.json`, nella sezione `pizze`, sotto
+la voce `supplementi`. Ogni supplemento ha un `nome`, un `prezzo` e un `gruppo`.
+I supplementi dello stesso gruppo sono mutuamente esclusivi: il cliente può
+sceglierne solo uno per gruppo (ad esempio una sola mozzarella e un solo tipo di
+impasto), mentre resta libero di combinare gruppi diversi.
+
 ---
 
 Sito creato da Vito Marchionna.
