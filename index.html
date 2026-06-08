@@ -49,6 +49,7 @@ header h1{
 }
 header h1 .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);display:inline-block}
 header p{margin:2px 0 0;color:var(--muted);font-size:13px}
+header p.copyright{font-size:10.5px;opacity:.7;margin-top:5px;letter-spacing:.02em}
 
 /* Tabs */
 .tabs{
@@ -260,7 +261,8 @@ select{appearance:none;-webkit-appearance:none;cursor:pointer;
 <div class="app">
   <header>
     <h1><span class="dot"></span>Euro Pizza &amp; Sfizi</h1>
-    <p>Ordina online — Consegna a domicilio</p>
+    <p>Ordina online — ritiro o consegna a domicilio</p>
+    <p class="copyright">© Vito Marchionna — Tutti i diritti riservati</p>
   </header>
 
   <div class="tabs" id="tabs">
@@ -332,11 +334,16 @@ select{appearance:none;-webkit-appearance:none;cursor:pointer;
       <select id="fTime"></select>
 
       <div class="gdpr">
-        <b>Privacy (GDPR).</b> I dati inseriti (nome, cognome, indirizzo)
+        <b>Privacy.</b> I dati inseriti (nome, cognome, indirizzo)
         <b>non vengono salvati né memorizzati</b> da questo sito o su alcun server.
         Vengono usati <b>solo</b> per comporre il messaggio WhatsApp che invii tu
         direttamente alla pizzeria, restando sul tuo dispositivo. Chiudendo la pagina
         ogni informazione viene cancellata.
+        <br><br>
+        Ai sensi del <b>Regolamento (UE) 2016/679 (GDPR), art. 6, par. 1, lett. a) e b)</b>,
+        l'inserimento dei dati costituisce consenso al loro utilizzo per la sola
+        gestione dell'ordine. Non avviene alcuna conservazione, profilazione o
+        cessione a terzi.
       </div>
 
       <button class="btn-primary" id="sendWhatsapp">
