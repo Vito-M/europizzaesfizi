@@ -247,6 +247,24 @@ select{appearance:none;-webkit-appearance:none;cursor:pointer;
   padding:11px 14px;font-weight:600;color:var(--ink)!important;margin-top:6px!important;
 }
 
+/* Sezione telefono */
+.phone-cta{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);box-shadow:var(--shadow);
+  margin:14px 14px 0;padding:14px 16px;
+  display:flex;align-items:center;gap:12px;
+}
+.phone-cta .pc-text{flex:1;min-width:0}
+.phone-cta .pc-text strong{font-weight:700;font-size:14.5px;letter-spacing:-.01em}
+.phone-cta .pc-text span{display:block;color:var(--muted);font-size:12.5px;margin-top:2px;line-height:1.4}
+.btn-call{
+  display:flex;align-items:center;gap:7px;text-decoration:none;flex-shrink:0;
+  border:none;background:var(--green);color:#fff;font-weight:700;font-size:14px;
+  padding:11px 16px;border-radius:11px;cursor:pointer;transition:.15s;
+}
+.btn-call:active{transform:scale(.96)}
+.btn-call svg{display:block}
+
 /* Rispetta la preferenza di sistema per ridurre il movimento */
 @media (prefers-reduced-motion: reduce){
   *, *::before, *::after{
@@ -264,6 +282,17 @@ select{appearance:none;-webkit-appearance:none;cursor:pointer;
     <p>Ordina online — Consegna a domicilio</p>
     <p class="copyright">© Vito Marchionna — Tutti i diritti riservati</p>
   </header>
+
+  <div class="phone-cta">
+    <div class="pc-text">
+      <strong>Preferisci ordinare a voce?</strong>
+      <span>Puoi telefonare direttamente alla pizzeria al numero 0809934688.</span>
+    </div>
+    <a class="btn-call" href="tel:0809934688" aria-label="Chiama la pizzeria al numero 0809934688">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      Chiama
+    </a>
+  </div>
 
   <div class="tabs" id="tabs">
     <button class="tab active" data-cat="pizze">Pizze</button>

@@ -1,5 +1,7 @@
 # Euro Pizza & Sfizi — Ordini Online
 
+**Sito online:** https://vito-m.github.io/europizzaesfizi/
+
 Interfaccia web mobile-first per la pizzeria Euro Pizza & Sfizi. Permette ai
 clienti di sfogliare il menu, comporre il carrello e inviare l'ordine
 direttamente su WhatsApp.
