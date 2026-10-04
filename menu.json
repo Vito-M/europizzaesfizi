@@ -44,7 +44,7 @@
         "items": [
           { "nome": "Crudaiola", "prezzo": 6.50, "descrizione": "Pomodoro, mozzarella, pomodorini, rucola, scaglie di ricotta marzotica" },
           { "nome": "Quattro Stagioni", "prezzo": 6.50, "descrizione": "Pomodoro, mozzarella, prosciutto cotto, funghi, carciofi, olive" },
-          { "nome": "Capricciosa", "prezzo": 6.50, "descrizione": "Pomodoro, mozzarella, prosciutto cotto, funghi, carciofi, olive" },
+          { "nome": "Capricciosa", "prezzo": 7.00, "descrizione": "Pomodoro, mozzarella, prosciutto cotto, funghi, carciofi, olive" },
           { "nome": "Americana", "prezzo": 6.50, "descrizione": "Pomodoro, mozzarella, wurstel, patatine fritte" },
           { "nome": "Norcina", "prezzo": 6.50, "descrizione": "Pomodoro, mozzarella, salsiccia di Norcia" },
           { "nome": "Tonno e Cipolla", "prezzo": 6.50, "descrizione": "Pomodoro, mozzarella, tonno, cipolla" },
