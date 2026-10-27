@@ -1,0 +1,126 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-src https://maps.google.com https://www.google.com; form-action 'none'; base-uri 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content"><meta name="theme-color" content="#A62622"><meta name="description" content="Scegli pizze, sfizi e bevande di Euro Pizza & Sfizi. Personalizza il tuo ordine a domicilio e completalo su WhatsApp."><title>Ordina | Euro Pizza & Sfizi</title><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/css/site.css"><link rel="stylesheet" href="assets/css/orders.css?v=compact-whatsapp"><script src="assets/js/config.js?v=delivery-1930" defer></script><script src="assets/js/orders.js?v=compact-whatsapp" defer></script></head><body>
+<a class="skip-link" href="#menuList">Vai al menu</a>
+<div class="app">
+  <header class="order-header"><a class="brand" href="index.html">Euro Pizza <span>& Sfizi</span></a><a href="index.html">Torna alla homepage</a></header>
+  <section class="order-intro" aria-label="Ordina online"><p>La tua prossima pizza</p><h1>Cosa ti va stasera?</h1><p>Scegli dal menu, personalizza la tua pizza e completa l’ordine su WhatsApp.</p><span class="delivery-tag">Consegna a domicilio · €1,00</span></section>
+  <section class="phone-cta" aria-label="Ordina al telefono">
+    <div class="pc-text">
+      <strong>Preferisci ordinare a voce?</strong>
+      <span>Puoi telefonare direttamente alla pizzeria al numero 0809934688.</span>
+    </div>
+    <a class="btn-call" href="tel:0809934688" aria-label="Chiama la pizzeria al numero 0809934688">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      Chiama
+    </a>
+  </section>
+
+  <nav class="tabs" id="tabs" aria-label="Categorie del menu">
+    <button class="tab active" aria-pressed="true" data-cat="pizze">Pizze</button>
+    <button class="tab" aria-pressed="false" data-cat="sfizi">Sfizi</button>
+    <button class="tab" aria-pressed="false" data-cat="dolci">Dolci</button>
+    <button class="tab" aria-pressed="false" data-cat="bevande">Bevande</button>
+  </nav>
+
+  <main id="menuList" aria-live="polite"><p class="empty">Caricamento del menu…</p></main><footer class="order-footer"><a href="index.html">Euro Pizza &amp; Sfizi</a><p>Copyright by Vito Marchionna</p></footer>
+</div>
+
+<!-- Floating cart -->
+<div class="cartbar">
+  <button class="cartbar-inner hidden" id="cartBar" type="button" aria-label="Apri il carrello">
+    <span style="display:flex;align-items:center">
+      <span class="count" id="cartCount">0</span>
+      <span class="total" id="cartTotalMini">€0.00</span>
+    </span>
+    <span class="go">Vedi carrello</span>
+  </button>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- Edit modal -->
+<div role="dialog" aria-modal="true" aria-label="Personalizza la pizza" class="overlay modal-center" id="editOverlay">
+  <div class="modal-box">
+    <h3 id="editTitle">Modifica</h3>
+    <p class="sub">Aggiungi un supplemento o scrivi una richiesta particolare.</p>
+    <div id="editSupp" class="supp-list"></div>
+    <label for="editNote">Richieste particolari</label><textarea maxlength="300" id="editNote" placeholder="Altre richieste (es. ben cotta, poco sale)..."></textarea>
+    <button class="btn-primary" style="background:var(--accent)" id="editConfirm">Aggiungi al carrello</button>
+    <button class="btn-ghost" id="editCancel">Annulla</button>
+  </div>
+</div>
+
+<!-- Cart sheet -->
+<div role="dialog" aria-modal="true" aria-label="Il tuo carrello" class="overlay" id="cartOverlay">
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2>Il tuo carrello</h2>
+      <button class="close" aria-label="Chiudi" data-close="cartOverlay">×</button>
+    </div>
+    <div class="sheet-body">
+      <div id="cartItems"></div>
+      <div class="totals" id="cartTotals"></div>
+      <button class="btn-primary" id="goCheckout">Procedi all'ordine</button>
+    </div>
+  </div>
+</div>
+
+<!-- Checkout sheet -->
+<div role="dialog" aria-modal="true" aria-label="Dati per la consegna" class="overlay" id="checkoutOverlay">
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2>I tuoi dati</h2>
+      <button class="close" aria-label="Chiudi" data-close="checkoutOverlay">×</button>
+    </div>
+    <div class="sheet-body">
+      <label for="fName">Nome *</label>
+      <input id="fName" name="given-name" autocomplete="given-name" maxlength="60" required type="text" placeholder="Mario">
+      <label for="fSurname">Cognome *</label>
+      <input id="fSurname" name="family-name" autocomplete="family-name" maxlength="60" required type="text" placeholder="Rossi">
+      <label for="fAddr">Via e numero civico *</label>
+      <input id="fAddr" name="address" autocomplete="street-address" maxlength="120" required type="text" placeholder="Via Roma 12">
+
+      <label for="fTime">Orario di consegna desiderato *</label>
+      <select id="fTime" name="delivery-time" required></select>
+
+      <div class="gdpr"><b>Privacy.</b> Questo sito non salva i tuoi dati su server. Nome e indirizzo servono solo a comporre l’ordine: li condividi con la pizzeria quando invii il messaggio su WhatsApp.</div>
+
+      <button class="btn-primary" id="sendWhatsapp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.84 9.84 0 001.51 5.26l-.999 3.648 3.978-1.045zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+        Prepara ordine WhatsApp
+      </button>
+      <button class="btn-ghost" data-close="checkoutOverlay">Torna indietro</button>
+    </div>
+  </div>
+</div>
+
+<!-- Closed info modal (giorno o orario di chiusura) -->
+<div role="dialog" aria-modal="true" aria-label="Informazioni di apertura" class="overlay modal-center" id="closedOverlay">
+  <div class="modal-box">
+    <div class="success-box">
+      <div class="ck closed-ck" aria-hidden="true">×</div>
+      <h3 id="closedTitle">Siamo chiusi</h3>
+      <p id="closedMsg"></p>
+      <p id="closedHours" class="hours-line"></p>
+      <button class="btn-primary" id="closedDone">Sfoglia comunque il menu</button>
+    </div>
+  </div>
+</div>
+
+<!-- Success modal -->
+<div role="dialog" aria-modal="true" aria-label="Completa su WhatsApp" class="overlay modal-center" id="successOverlay">
+  <div class="modal-box">
+    <button class="close whatsapp-close" type="button" data-close="successOverlay" aria-label="Chiudi il riepilogo">×</button>
+    <div class="success-box">
+      <h3>Il riepilogo è pronto</h3>
+      <p>Apri WhatsApp dal pulsante qui sotto, poi premi Invia nella chat. L’ordine parte solo quando invii il messaggio.</p><a class="btn-primary whatsapp-link" id="whatsappLink" target="_blank" rel="noopener noreferrer">Apri WhatsApp<span class="sr-only"> (si apre in una nuova scheda o nell’app)</span></a>
+      <div class="warn">
+        <b>L'ordine non è ancora confermato.</b> Attendi la risposta della pizzeria
+        su WhatsApp: ti confermeranno se è possibile prenderlo in carico, i tempi e
+        il totale definitivo (eventuali modifiche verranno conteggiate al momento).
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body></html>

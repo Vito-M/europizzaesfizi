@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Michele Soranno",
+    "rating": 5,
+    "text": "Ottima pizzeria da asporto. Rapidi e veloci, con prodotti di qualità.",
+    "sourceImage": "rec1.jpg"
+  },
+  {
+    "name": "Rosy Ada",
+    "rating": 5,
+    "text": "Pizza a dir poco ottima, farcita con ingredienti di prima scelta e di qualità. Servizio impeccabile: ci avevano dato un orario e sono arrivati addirittura con 5 minuti di anticipo.",
+    "sourceImage": "rec2.jpg"
+  },
+  {
+    "name": "Benedetto Di Gioia",
+    "rating": 5,
+    "text": "Una pizza vecchia scuola, sottile e scrocchiarella. Tanta rosticceria tra cui scegliere. La cassiera è di una gentilezza unica.",
+    "sourceImage": "rec3.jpg"
+  }
+]
