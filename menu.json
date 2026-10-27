@@ -88,7 +88,7 @@
       {
         "title": "Fritti",
         "items": [
-          { "nome": "Panzerotto", "prezzo": 1.50, "descrizione": "Pomodoro, mozzarella (1 pezzo)" },
+          { "nome": "Panzerotto", "prezzo": 2.00, "descrizione": "Pomodoro, mozzarella (1 pezzo)" },
           { "nome": "Panzerottini", "prezzo": 3.00, "descrizione": "Pomodoro, mozzarella (5 pezzi)" },
           { "nome": "Scagliozze", "prezzo": 3.00, "descrizione": "Polenta fritta, sale (5 pezzi)" },
           { "nome": "Anelli di Cipolla", "prezzo": 3.00, "descrizione": "Cipolle, farina, uova, pangrattato (5 pezzi)" },
