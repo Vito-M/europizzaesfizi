@@ -4,7 +4,7 @@ const CONFIG = Object.freeze({
   // Giorni di chiusura settimanale: 0=Domenica, 1=Lunedì, 2=Martedì, 3=Mercoledì, 4=Giovedì, 5=Venerdì, 6=Sabato
   CLOSED_DAYS: [2],
   // Eccezioni: date (formato "AAAA-MM-GG") in cui la pizzeria è APERTA anche se cade in un giorno di chiusura
-  OPEN_EXCEPTIONS: [],
+  OPEN_EXCEPTIONS: ["2026-10-27"],
   // Eccezioni: date (formato "AAAA-MM-GG") in cui la pizzeria è CHIUSA anche se non è un giorno di chiusura abituale (es. festività)
   CLOSED_EXCEPTIONS: [],
   // Fascia oraria entro cui è possibile ORDINARE (formato 24h "HH:MM"). Fuori da questa fascia compare il modale.
