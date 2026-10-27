@@ -128,8 +128,8 @@
       {
         "title": "Birre",
         "items": [
-          { "nome": "Nastro Azzurro", "prezzo": 1.50, "descrizione": "Bottiglia 33cl" },
-          { "nome": "Ichnusa", "prezzo": 1.50, "descrizione": "Bottiglia 33cl" },
+          { "nome": "Nastro Azzurro", "prezzo": 2.00, "descrizione": "Bottiglia 33cl" },
+          { "nome": "Peroni", "prezzo": 1.50, "descrizione": "Bottiglia 33cl" },
           { "nome": "Birra al Limone", "prezzo": 1.50, "descrizione": "Bottiglia 33cl" },
           { "nome": "Peroni Grande", "prezzo": 3.00, "descrizione": "Bottiglia 66cl" },
           { "nome": "Corona", "prezzo": 3.00, "descrizione": "Bottiglia 33cl" },
